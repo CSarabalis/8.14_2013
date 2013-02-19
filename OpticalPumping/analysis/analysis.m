@@ -1,4 +1,4 @@
-%%NOTES ON UNITS
+%% Notes and Startup
 
 %tableA [ Sweep Rate kHz/s, Resonance Frequency kHz, Standard Deviation kHz ]
 %		contains sweep rate error analysis. data collected by varying
@@ -8,6 +8,37 @@
 %		contains resonance frequencies for varying magnetic field
 %		along the z axis
 
-%%Error analysis for sweep rate
+home = pwd;
 
+%load the data
+cd ../data;
+load data.mat;
+cd(home);
+IEarth = [165.7 -19.3 -32.3];  %currents that buck out Earth's magnetic field
 
+%% Error analysis for sweep rate
+
+sweepRate = tableA(:,1);
+resonance = tableA(:,2);
+deltaRes  = tableA(:,3);
+fitA = linearFit(sweepRate,resonance,deltaRes)
+%annotate
+xlabel('Sweep Rate [kHz/s]')
+ylabel('Resonance Frequency [kHz]')
+
+%% Processing Table B
+
+Btotal = sqrt(i2b(tableB(:,1) - IEarth(1),'x').^2+i2b(tableB(:,2)-IEarth(2),'y').^2+i2b(tableB(:,3)-IEarth(3),'z').^2);
+%plot the total B field calculated from Helmholtz currents and measured by
+%   the magnetometer
+figure
+plot(Btotal,tableB(:,4)*0.001,'.')
+title('Magnetic Field Consistency Check')
+xlabel('Magnitude of B Calculated from Currents [G]')
+ylabel('B Measured by Magnetometer [G]')
+%seems to be a mismatch between positive and negative readings
+figure
+plot(Btotal,abs(tableB(:,4)*0.001),'.')
+title('Magnetic Field Consistency Check')
+xlabel('Magnitude of B Calculated from Currents [G]')
+ylabel('Magnitude of B Measured by Magnetometer [G]')

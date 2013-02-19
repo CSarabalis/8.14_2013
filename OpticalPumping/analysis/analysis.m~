@@ -72,4 +72,3 @@ ylabel('Resonance Frequency [Hz]')
 
 %% Measuring the resistance of the Coil
 
-fitC = linearFit(tableC(:,1),tableC(:,2),0.01*ones(length(tableC),1));

@@ -75,6 +75,9 @@ fitB1 = linearFit(Btotal(indices),resFreqOne,ones(length(resFreqOne),1))
 title('Resonsnace Frequency of Peak 1 vs. Magnetic Field Strength')
 xlabel('Total Magnetic Field [G]')
 ylabel('Resonance Frequency [kHz]')
+%print results
+display('Expected g*mu_B/h = 4.665415e9')
+display(['Measured: ',num2str(fitB1.a*1e7,'%10.5e'),' \pm ', num2str(fitB1.aerr*1e7,'%10.5e')])
 
 % Second Peak
 indices = ~isnan(tableB(:,6));
@@ -86,6 +89,9 @@ fitB2 = linearFit(Btotal(indices),resFreqTwo,ones(length(resFreqTwo),1))
 title('Resonsnace Frequency of Peak 2 vs. Magnetic Field Strength')
 xlabel('Total Magnetic Field [G]')
 ylabel('Resonance Frequency [kHz]')
+%print 
+display('Expected g*mu_B/h = 6.998123e9')
+display(['Measured: ',num2str(fitB2.a*1e7,'%10.5e'),' \pm ', num2str(fitB2.aerr*1e7,'%10.5e')])
 
 %cleanup
 clear indices resFreqOne resFreqTwo Btotal
@@ -100,4 +106,4 @@ display(['Resistance of the Coil: ', num2str(1/fitC.a), '+-', num2str(fitC.aerr/
 
 %% Final Cleanup
 
-clear IEarth home
+clear home

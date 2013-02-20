@@ -1,4 +1,4 @@
-function [ b ] = i2b( current, direction )
+function [ b ] = i2b( current, direction, earth )
 % Converts current in mA to magnetic field in Gauss
 
 muNot = 4*pi*10^-7; % SI

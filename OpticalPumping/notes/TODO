@@ -1,2 +1,5 @@
-Make a map between current in the various Helmholtz coils and magnetic field.
+Measure the resonance frequency by varying the magnetic field and keep the RF oscillations in the helmholtz coils constant.
 
+Collect data and create a visualization for the bucking out of earth's magnetic field.
+
+Measure the relaxation time.

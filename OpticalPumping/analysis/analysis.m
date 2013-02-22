@@ -31,7 +31,7 @@ home = pwd;
 cd ../data;
 load data.mat;
 cd(home);
-IEarth = [165.7 -19.3 -33.3];  %currents that buck out Earth's magnetic field
+IEarth = [165.7 -19.3 -33.3];  %currents that fuck out Earth's magnetic field
 
 %% Error analysis for sweep rate
 
@@ -96,6 +96,8 @@ display('Measuring Coil Resistance')
 fitC = linearFit(tableC(:,1),tableC(:,2),0.01*ones(length(tableC),1))
 %annotate
 title({'Resistance of the Coil','Using Function Generator and Ammeter'})
+xlabel('Average Voltage as Measured by the Oscilloscope [mV]')
+ylabel('Current Measure by the Multimeter [mA]')
 display(['Resistance of the Coil: ', num2str(1/fitC.a), '+-', num2str(fitC.aerr/fitC.a^2), ' ohms'])
 
 %% Final Cleanup

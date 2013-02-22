@@ -24,6 +24,23 @@
 %       Description:
 %       used for the determination of the resistance
 
+%tableD [ RF Coil Frequency [kHz], First Peak Resonance Frequency [mV],
+%         Second Peak Frequency [mV], Instrument Precision for Peak 1 [mv],
+%         Instrument Precision for Second Peak [mV], Discrepancy Between
+%         Measurements by Chris and Tom for Peak 1 [mV], Discrepancy for
+%         Peak 2 [mV] ]
+%
+%       Description:
+%       fixed frequency, sweep B
+
+%tableE [ RF Coil Frequency [kHz], First Peak Resonance Frequency [mV],
+%         Second Peak Frequency [mV], Instrument Precision for Peak 1 [mv],
+%         Instrument Precision for Second Peak [mV], Discrepancy Between
+%         Measurements by Chris and Tom for Peak 1 [mV], Discrepancy for
+%         Peak 2 [mV] ]
+%
+%       Description:
+%       fixed frequency, sweep B
 
 home = pwd;
 
@@ -48,7 +65,7 @@ ylabel('Resonance Frequency [kHz]')
 %cleanup
 clear sweepRate resonance deltaRes
 
-%% Processing Table B
+%% Processing Table B: Fixed B, Sweep Frequency
 
 Btotal = sqrt(i2b(tableB(:,1) - IEarth(1),'x').^2+i2b(tableB(:,2)-IEarth(2),'y').^2+i2b(tableB(:,3)-IEarth(3),'z').^2);
 %plot the total B field calculated from Helmholtz currents and measured by
@@ -103,6 +120,10 @@ fitC = linearFit(tableC(:,1),tableC(:,2),0.01*ones(length(tableC),1))
 %annotate
 title({'Resistance of the Coil','Using Function Generator and Ammeter'})
 display(['Resistance of the Coil: ', num2str(1/fitC.a), '+-', num2str(fitC.aerr/fitC.a^2), ' ohms'])
+
+%% Fixed Frequency, Sweep B
+
+
 
 %% Final Cleanup
 

@@ -1,0 +1,27 @@
+Sweep range: 0-400kHz
+Sweep duration varied: 0.5,1,2,5sec
+
+
+With no ND-40 filter:
+Sweep Rate, Peak Time (absorbance), Uncertainty in Peak Time
+[kHz/sec], [sec], [sec]
+
+200, 1.029, 0.0015
+400, 0.540, 0.0015
+800, 0.294, 0.0020
+80, 2.475, 0.0050
+
+800, 0.279, 0.002
+400, 0.517, 0.002
+200, 1.014, 0.004
+80, 2.485, 0.005
+
+
+With one ND-40 filter:
+Sweep Rate, Peak Time (absorbance), Uncertainty in Peak Time
+[kHz/sec], [sec], [sec]
+
+80, 2.50, 0.010
+200, 1.012, 0.0040
+400, 0.528, 0.0040
+800, 0.278, 0.0060

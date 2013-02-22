@@ -24,6 +24,23 @@
 %       Description:
 %       used for the determination of the resistance
 
+%tableD [ RF Coil Frequency [kHz], First Peak Resonance Frequency [mV],
+%         Second Peak Frequency [mV], Instrument Precision for Peak 1 [mv],
+%         Instrument Precision for Second Peak [mV], Discrepancy Between
+%         Measurements by Chris and Tom for Peak 1 [mV], Discrepancy for
+%         Peak 2 [mV] ]
+%
+%       Description:
+%       fixed frequency, sweep B
+
+%tableE [ RF Coil Frequency [kHz], First Peak Resonance Frequency [mV],
+%         Second Peak Frequency [mV], Instrument Precision for Peak 1 [mv],
+%         Instrument Precision for Second Peak [mV], Discrepancy Between
+%         Measurements by Chris and Tom for Peak 1 [mV], Discrepancy for
+%         Peak 2 [mV] ]
+%
+%       Description:
+%       fixed frequency, sweep B
 
 home = pwd;
 
@@ -48,7 +65,7 @@ ylabel('Resonance Frequency [kHz]')
 %cleanup
 clear sweepRate resonance deltaRes
 
-%% Processing Table B
+%% Processing Table B: Fixed B, Sweep Frequency
 
 Btotal = sqrt(i2b(tableB(:,1) - IEarth(1),'x').^2+i2b(tableB(:,2)-IEarth(2),'y').^2+i2b(tableB(:,3)-IEarth(3),'z').^2);
 %plot the total B field calculated from Helmholtz currents and measured by
@@ -75,6 +92,9 @@ fitB1 = linearFit(Btotal(indices),resFreqOne,ones(length(resFreqOne),1))
 title('Resonsnace Frequency of Peak 1 vs. Magnetic Field Strength')
 xlabel('Total Magnetic Field [G]')
 ylabel('Resonance Frequency [kHz]')
+%print results
+display('Expected g*mu_B/h = 4.665415e9')
+display(['Measured: ',num2str(fitB1.a*1e7,'%10.5e'),' \pm ', num2str(fitB1.aerr*1e7,'%10.5e')])
 
 % Second Peak
 indices = ~isnan(tableB(:,6));
@@ -86,6 +106,9 @@ fitB2 = linearFit(Btotal(indices),resFreqTwo,ones(length(resFreqTwo),1))
 title('Resonsnace Frequency of Peak 2 vs. Magnetic Field Strength')
 xlabel('Total Magnetic Field [G]')
 ylabel('Resonance Frequency [kHz]')
+%print 
+display('Expected g*mu_B/h = 6.998123e9')
+display(['Measured: ',num2str(fitB2.a*1e7,'%10.5e'),' \pm ', num2str(fitB2.aerr*1e7,'%10.5e')])
 
 %cleanup
 clear indices resFreqOne resFreqTwo Btotal
@@ -100,6 +123,10 @@ xlabel('Average Voltage as Measured by the Oscilloscope [mV]')
 ylabel('Current Measure by the Multimeter [mA]')
 display(['Resistance of the Coil: ', num2str(1/fitC.a), '+-', num2str(fitC.aerr/fitC.a^2), ' ohms'])
 
+%% Fixed Frequency, Sweep B
+
+
+
 %% Final Cleanup
 
-clear IEarth home
+clear home

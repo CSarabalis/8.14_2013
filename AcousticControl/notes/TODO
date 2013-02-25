@@ -1,0 +1,11 @@
+Proposal
+
+	Change force estimation from pressure differentials to drag estimates
+
+	Closed form expression for moving standing wave (function of space and time)
+
+		2 versions: increasing lambda, inch worm approach
+
+	Simulate bead in moving standing wave
+
+		Tabulate average delta x

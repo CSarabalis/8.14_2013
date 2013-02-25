@@ -1,5 +1,13 @@
-Measure the resonance frequency by varying the magnetic field and keep the RF oscillations in the helmholtz coils constant.
+Analysis:
 
-Collect data and create a visualization for the bucking out of earth's magnetic field.
+	Categorize and estimate magnitudes of systematic errors for fixed B, vary f.
 
-Measure the relaxation time.
+	Compute relaxation time and pumping time.
+
+	Model the system with linear, first order ODE's and see if results are consistent with measured pumping rates.
+
+Experimental:
+
+	Collect data and create a visualization for the bucking out of earth's magnetic field.
+
+	Test hypotheses following error analysis.

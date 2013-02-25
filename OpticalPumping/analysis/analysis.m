@@ -32,6 +32,7 @@
 %
 %       Description:
 %       fixed frequency, sweep B
+%       driven by a ramp
 
 %tableE [ RF Coil Frequency [kHz], First Peak Resonance Frequency [mV],
 %         Second Peak Frequency [mV], Instrument Precision for Peak 1 [mv],
@@ -41,6 +42,7 @@
 %
 %       Description:
 %       fixed frequency, sweep B
+%       driven by a triangle wave
 
 home = pwd;
 
@@ -123,8 +125,44 @@ display(['Resistance of the Coil: ', num2str(1/fitC.a), '+-', num2str(fitC.aerr/
 
 %% Fixed Frequency, Sweep B
 
+ramp = tableD;
+triangleUpramp = tableE([1,3],:);
+triangleDownramp = tableE([2,4],:);
 
+%linear fit of peak 1
+%   currently doesn't compute Btotal
+%   currently doesn't take into account signal lag from tableA
+fitD1 = linearFit(i2b(v2i(1e-3*ramp(:,3))-IEarth(3),'z'),ramp(:,1),i2b(v2i(ramp(:,5)),'z'))
+%annotate
+title({'Fixed Frequency, Varied B','Peak 1, Ramp 2 V/s'})
+ylabel('Resonance Frequency [kHz]')
+xlabel('Voltage [mV]')
+fontSize(16)
+
+%linear fit of peak 2
+%   currently doesn't compute Btotal
+%   currently doesn't take into account signal lag from tableA
+fitD2 = linearFit(i2b(v2i(1e-3*ramp(:,2))-IEarth(3),'z'),ramp(:,1),i2b(v2i(ramp(:,4)),'z'))
+%annotate
+title({'Fixed Frequency, Varied B','Peak 2, Ramp 2 V/s'})
+ylabel('Resonance Frequency [kHz]')
+xlabel('Magnetic Field in the Z [G]')
+fontSize(16)
+
+%taking a look at the discrepancy between sweep characteristics
+figure
+hold on
+plot(ramp(:,1),ramp(:,2),'.b')
+plot(triangleDownramp(:,1),triangleDownramp(:,2),'.r')
+plot(triangleUpramp(:,1),triangleUpramp(:,2),'.g')
+%annotate
+title('Fixed Frequency, Varied B: Discepancy from Sweep Characteristics')
+ylabel('Resonance Frequency [kHz]')
+xlabel('Magnetic Field in the Z [G]')
+fontSize(16)
+
+clear ramp triangleUpramp triangleDownramp
 
 %% Final Cleanup
 
-clear home
+clear home IEarth

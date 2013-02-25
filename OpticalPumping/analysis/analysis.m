@@ -89,11 +89,14 @@ indices = ~isnan(tableB(:,5));
 resFreqOne = tableB(indices,5)./tableB(indices,9); %convert into fraction of sweep
 resFreqOne = tableB(indices,7) + resFreqOne.*(tableB(indices,8)-tableB(indices,7)); %convert into kHz
 display('First Peak Frequency vs. B')
-fitB1 = linearFit(Btotal(indices),resFreqOne,ones(length(resFreqOne),1))
+fitB1 = linearFit(Btotal(indices),resFreqOne - 2*fitA.a*100,ones(length(resFreqOne),1)) %correction in arg2: 200 kHz is the sweep rate; mysterious factor of 2
+hold on
+plot(Btotal(indices),466.54*Btotal(indices),'-r') %predicted curve
 %annotate
 title('Resonsnace Frequency of Peak 1 vs. Magnetic Field Strength')
 xlabel('Total Magnetic Field [G]')
 ylabel('Resonance Frequency [kHz]')
+fontSize(16)
 %print results
 display('Expected g*mu_B/h = 4.665415e9')
 display(['Measured: ',num2str(fitB1.a*1e7,'%10.5e'),' \pm ', num2str(fitB1.aerr*1e7,'%10.5e')])
@@ -103,11 +106,14 @@ indices = ~isnan(tableB(:,6));
 resFreqTwo = tableB(indices,6)./tableB(indices,9); %convert into fraction of sweep
 resFreqTwo = tableB(indices,7) + resFreqTwo.*(tableB(indices,8)-tableB(indices,7)); %convert into kHz
 display('First Peak Frequency vs. B')
-fitB2 = linearFit(Btotal(indices),resFreqTwo,ones(length(resFreqTwo),1))
+fitB2 = linearFit(Btotal(indices),resFreqTwo - 2*fitA.a*100,ones(length(resFreqTwo),1)) %correction in arg2: 200 kHz is the sweep rate; mysterious factor of 2
+hold on
+plot(Btotal(indices),699.81*Btotal(indices),'-r') %predicted curve
 %annotate
 title('Resonsnace Frequency of Peak 2 vs. Magnetic Field Strength')
 xlabel('Total Magnetic Field [G]')
 ylabel('Resonance Frequency [kHz]')
+fontSize(16)
 %print 
 display('Expected g*mu_B/h = 6.998123e9')
 display(['Measured: ',num2str(fitB2.a*1e7,'%10.5e'),' \pm ', num2str(fitB2.aerr*1e7,'%10.5e')])

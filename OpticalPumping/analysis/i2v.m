@@ -1,6 +1,6 @@
 function [ volts ] = i2v( current )
-%UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
+%i2v(current) = volts
+% uses 49.2 ohms for the resistance of the Z-coil
 
 volts = current*1e-3*49.2; %49.2 ohms, current in ma
 end

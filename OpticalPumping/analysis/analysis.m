@@ -6,13 +6,20 @@
 %		contains sweep rate error analysis. data collected by varying
 %		the sweep rate and finding the absorption peak
 
-%tableB [ Current in the X [mA], Current in the Y [mA], Current in the Z [mA],
-%         Magnetic Field as Measured by the Magnetometer [mG],
-%         Resonance Frequency of the First Peak [s],
-%         Resonance Frequency of the Second Peak [s],
-%         Beginning of Frequency Sweep [kHz],
-%         End of Frequency Sweep [kHz],
-%         Duration of Sweep [s]  ]
+%tableB [ 1:Current in the X [mA], 2:Current in the Y [mA], 3:Current in the Z [mA],
+%         4:Magnetic Field as Measured by the Magnetometer [mG],
+%         5:Resonance Frequency of the First Peak [s], 6:Resonance
+%         Frequency of the Second%tableD [ RF Coil Frequency [kHz], First
+%         Peak Resonance Frequency [mV], Second Peak Frequency [mV],
+%         Instrument Precision for Peak 1 [mv], Instrument Precision for
+%         Second Peak [mV], Discrepancy Between Measurements by Chris and
+%         Tom for Peak 1 [mV], Discrepancy for Peak 2 [mV] ]
+%
+%       Description:
+%       fixed frequency, sweep B Peak [s],
+%         7:Beginning of Frequency Sweep [kHz],
+%         8:End of Frequency Sweep [kHz],
+%         9:Duration of Sweep [s]  ]
 %
 %       Description:
 %		contains resonance frequencies for varying magnetic field
@@ -44,13 +51,53 @@
 %       fixed frequency, sweep B
 %       driven by a triangle wave
 
+%tableF [ 1:Current in the X [mA], 2:Current in the Y [mA], 3:Current in the Z [mA],
+%         4:Magnetic Field as Measured by the Magnetometer [mG],
+%         5:Resonance Frequency of the First Peak [s], 6:Resonance
+%         Frequency of the Second Peak [s], 7:Beginning of Frequency Sweep
+%         [kHz], 8:End of Frequency Sweep [kHz], 9:Duration of Sweep [s]  ]
+%
+%       Description:
+%		contains resonance frequencies for varying magnetic field
+%		along the z axis
+%       NB: averaging over 8 runs on oscilloscope, resonance freqs uncerts
+%       should be treated as uncert in mean
+%       NB2: Instrumental uncert in 5 & 6 is +-1ms
+%
+%       Temperature of vapour chamber: 42.4 deg celsius
+%       Date recorded: Mon 25 Feb
+
+%tableG [ 1:RF Coil Frequency [kHz], 2:Chris Peak 1 Resonance Frequency [mV],
+%         3:Chris Peak 2 Frequency [mV], 4:Tom Peak 1 [mV], 5:Tom Peak 2
+%         [mV], 6:Instrument Precision for First Peak Chris [mv], 7:Instrument
+%         Precision for Second Peak Chris [mV], 8:Sweep Range [Volts
+%         peak2peak], 9:Sweep time [secs], 10:Sweep Offset [Volts],
+%         11:Up-ramp=1, down-ramp=0 ], 12:Instrument Precision for First Peak
+%         Tom [mV], 13:Instrument prec for second peak Tom [mV]
+%
+%       Description:
+%       fixed frequency, sweep B
+%
+%       Ix = 148.4, Iy = -19.24, Iz is being swept
+%
+%       NB: Triangle wave, both up (1) and down (0) ramps recorded
+%       NB2: One measurement made by Chris, a second by Tom. Instrument
+%       precsion determined by wiggling left/right one notch with
+%       oscilloscope cursor
+%       NB3: Averaging over 16 oscilloscope runs.
+%
+%       Temperature of vapour chamber: 42.1 deg celsius
+%       Date recorded: Mon 25 Feb
+
 home = pwd;
 
 %load the data
 cd ../data;
 load data.mat;
 cd(home);
-IEarth = [165.7 -19.3 -33.3];  %currents that fuck out Earth's magnetic field
+addpath ./tools;
+addpath ./subscripts;
+IEarth = [165.7 -19.3 -33.3];  %currents that buck out Earth's magnetic field
 
 %% Error analysis for sweep rate
 

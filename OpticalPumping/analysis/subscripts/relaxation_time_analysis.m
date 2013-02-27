@@ -1,6 +1,6 @@
 %work in progress
 
-cd ..
+cd ../..
 cd './oscilloscope'
 
 osc_1=importdata('1_3.178_0.000_500.CSV',',',2);

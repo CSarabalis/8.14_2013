@@ -157,8 +157,8 @@ title(tit,'fontsize',12);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 str1=num2str(RChiSquare,2);
-text(0.3,100,['\chi^2_{\nu-1} = ' str1]);
-text(0.3,90,['Probability =' num2str(prob,2),' %']);
+disp('Now click some white space on the plot to place the Chi-squared and probability read-outs')
+gtext({['\chi^2_{\nu-1} = ' str1],['Probability =' num2str(prob,2),' %']});
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Residuals qualitatively demonstrate the agreement between the model

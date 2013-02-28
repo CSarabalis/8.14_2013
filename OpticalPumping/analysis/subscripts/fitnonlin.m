@@ -155,10 +155,13 @@ title(tit,'fontsize',12);
 % A certain amount of information placed on a graph can make it more easily
 % understood by an audience who perhaps cannot hear everything you say
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+n=3; % # of digits of precision to show on plot annotation
 str1=num2str(RChiSquare,2);
-text(0.3,100,['\chi^2_{\nu-1} = ' str1]);
-text(0.3,90,['Probability =' num2str(prob,2),' %']);
+disp(['Now click some white space on the plot to place the Chi-squared and'...
+'probability read-outs'])
+gtext({['y = ' num2str(a(1),n) '(1+((x+' num2str(a(3),n) ')/' num2str(a(2),n)...
+ ')^2)^{0.5}+' num2str(a(4),n)], ['\chi^2_{\nu-1} = ' str1],...
+['Probability =' num2str(prob,n),' %']});
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Residuals qualitatively demonstrate the agreement between the model

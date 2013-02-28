@@ -72,7 +72,7 @@
 %         [mV], 6:Instrument Precision for First Peak Chris [mv], 7:Instrument
 %         Precision for Second Peak Chris [mV], 8:Sweep Range [Volts
 %         peak2peak], 9:Sweep time [secs], 10:Sweep Offset [Volts],
-%         11:Up-ramp=1, down-ramp=0 ], 12:Instrument Precision for First Peak
+%         11:[Up-ramp=1, down-ramp=0], 12:Instrument Precision for First Peak
 %         Tom [mV], 13:Instrument prec for second peak Tom [mV]
 %
 %       Description:
@@ -137,8 +137,9 @@ resFreqOne = tableB(indices,5)./tableB(indices,9); %convert into fraction of swe
 resFreqOne = tableB(indices,7) + resFreqOne.*(tableB(indices,8)-tableB(indices,7)); %convert into kHz
 display('First Peak Frequency vs. B')
 fitB1 = linearFit(Btotal(indices),resFreqOne - 2*fitA.a*100,ones(length(resFreqOne),1)) %correction in arg2: 200 kHz is the sweep rate; mysterious factor of 2
+%plot model
 hold on
-plot(Btotal(indices),466.54*Btotal(indices),'-r') %predicted curve
+plot(Btotal(indices),466.54*Btotal(indices),'-r')
 %annotate
 title('Resonsnace Frequency of Peak 1 vs. Magnetic Field Strength')
 xlabel('Total Magnetic Field [G]')
@@ -154,8 +155,9 @@ resFreqTwo = tableB(indices,6)./tableB(indices,9); %convert into fraction of swe
 resFreqTwo = tableB(indices,7) + resFreqTwo.*(tableB(indices,8)-tableB(indices,7)); %convert into kHz
 display('First Peak Frequency vs. B')
 fitB2 = linearFit(Btotal(indices),resFreqTwo - 2*fitA.a*100,ones(length(resFreqTwo),1)) %correction in arg2: 200 kHz is the sweep rate; mysterious factor of 2
+%plot model
 hold on
-plot(Btotal(indices),699.81*Btotal(indices),'-r') %predicted curve
+plot(Btotal(indices),699.81*Btotal(indices),'-r')
 %annotate
 title('Resonsnace Frequency of Peak 2 vs. Magnetic Field Strength')
 xlabel('Total Magnetic Field [G]')
@@ -178,26 +180,32 @@ xlabel('Average Voltage as Measured by the Oscilloscope [mV]')
 ylabel('Current Measure by the Multimeter [mA]')
 display(['Resistance of the Coil: ', num2str(1/fitC.a), '+-', num2str(fitC.aerr/fitC.a^2), ' ohms'])
 
-%% Fixed Frequency, Sweep B
+%% Fixed Frequency, Sweep B: Table D and G
 
 ramp = tableD;
 triangleUpramp = tableE([1,3],:);
 triangleDownramp = tableE([2,4],:);
 
+Btotal = sqrt(i2b(166.0 - IEarth(1),'x').^2+i2b(-19.28-IEarth(2),'y').^2+i2b(v2i(1e-3*ramp(:,3))-IEarth(3),'z').^2);
 %linear fit of peak 1
-%   currently doesn't compute Btotal
 %   currently doesn't take into account signal lag from tableA
-fitD1 = linearFit(i2b(v2i(1e-3*ramp(:,3))-IEarth(3),'z'),ramp(:,1),i2b(v2i(ramp(:,5)),'z'))
+fitD1 = linearFit(Btotal,ramp(:,1),i2b(v2i(ramp(:,5)),'z'))
+%plot model
+hold on
+plot(Btotal,466.54*Btotal,'-r')
 %annotate
 title({'Fixed Frequency, Varied B','Peak 1, Ramp 2 V/s'})
 ylabel('Resonance Frequency [kHz]')
-xlabel('Voltage [mV]')
+xlabel('Total Magnetic Field [G]')
 fontSize(16)
 
+Btotal = sqrt(i2b(166.0 - IEarth(1),'x').^2+i2b(-19.28-IEarth(2),'y').^2+i2b(v2i(1e-3*ramp(:,2))-IEarth(3),'z').^2);
 %linear fit of peak 2
-%   currently doesn't compute Btotal
 %   currently doesn't take into account signal lag from tableA
-fitD2 = linearFit(i2b(v2i(1e-3*ramp(:,2))-IEarth(3),'z'),ramp(:,1),i2b(v2i(ramp(:,4)),'z'))
+fitD2 = linearFit(Btotal,ramp(:,1),i2b(v2i(ramp(:,4)),'z'))
+%plot model
+hold on
+plot(Btotal,699.81*Btotal,'-r')
 %annotate
 title({'Fixed Frequency, Varied B','Peak 2, Ramp 2 V/s'})
 ylabel('Resonance Frequency [kHz]')
@@ -216,7 +224,17 @@ ylabel('Resonance Frequency [kHz]')
 xlabel('Magnetic Field in the Z [G]')
 fontSize(16)
 
-clear ramp triangleUpramp triangleDownramp
+%comparing change over time of the points
+figure
+hold on
+title({'Change from Day to Day','Need to Compute Total B'})
+upIndicies = find(tableG(:,11));
+errorbar(i2b(v2i(1e-3*tableG(upIndicies,2))-IEarth(3),'z'),tableG(upIndicies,1),tableG(upIndicies,6),'.g')
+errorbar(i2b(v2i(1e-3*tableG(upIndicies,4))-IEarth(3),'z'),tableG(upIndicies,1),tableG(upIndicies,6),'.r')
+errorbar(i2b(v2i(1e-3*ramp(:,3))-IEarth(3),'z'),ramp(:,1),i2b(v2i(ramp(:,5)),'z'),'.')
+
+
+clear ramp triangleUpramp triangleDownramp upIndicies Btotal
 
 %% Final Cleanup
 

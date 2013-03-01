@@ -59,13 +59,13 @@ Btotal = sqrt(i2b(tableH(:,1) - IEarth(1),'x').^2+i2b(tableH(:,2)-IEarth(2),'y')
 % %plot the total B field calculated from Helmholtz currents and measured by
 % %   the magnetometer
 % figure
-% plot(Btotal,tableH(:,4)*0.001,'.')
+% plot(Btotal,x(:,4)*0.001,'.')
 % title('Magnetic Field Consistency Check')
 % xlabel('Magnitude of B Calculated from Currents [G]')
 % ylabel('B Measured by Magnetometer [G]')
 % %seems to be a mismatch between positive and negative readings
 % figure
-% plot(Btotal,abs(tableH(:,4)*0.001),'.')
+% plot(Btotal,abs(x(:,4)*0.001),'.')
 % title('Magnetic Field Consistency Check')
 % xlabel('Magnitude of B Calculated from Currents [G]')
 % ylabel('Magnitude of B Measured by Magnetometer [G]')
@@ -107,6 +107,48 @@ subplot(2,2,4)
 	%print 
 	display('Expected g*mu_B/h = 6.998123e9')
 	display(['Measured: ',num2str(fitH2.a*1e7,'%10.5e'),' \pm ', num2str(fitH2.aerr*1e7,'%10.5e')])
+%% Combining the Tables
 
+x = [tableB;tableH];
+Btotal = sqrt(i2b(x(:,1) - IEarth(1),'x').^2+i2b(x(:,2)-IEarth(2),'y').^2+i2b(x(:,3)-IEarth(3),'z').^2);
+    %First Peak
+	indices = ~isnan(x(:,5));
+	resFreqOne = x(indices,5)./x(indices,9); %convert into fraction of sweep
+	resFreqOne = x(indices,7) + resFreqOne.*(x(indices,8)-x(indices,7)); %convert into kHz
+	display('First Peak Frequency vs. B')
+    figure
+	fitResFixB1 = linearFit(Btotal(indices),resFreqOne - 2*fitA.a*(x(indices,8)-x(indices,7))./x(indices,9),ones(length(resFreqOne),1)) %correction in arg2: 200 kHz is the sweep rate; mysterious factor of 2
+	%plot model
+	hold on
+	plot(Btotal(indices),466.54*Btotal(indices),'-r')
+	%annotate
+	title('Zeeman Resonance Frequencies for Rb 85 in a Fixed Magnetic Field')
+	xlabel('Total Magnetic Field [G]')
+	ylabel('Resonance Frequency [kHz]')
+	fontSize(16)
+	%print results
+	display('Expected g*mu_B/h = 4.665415e9')
+	display(['Measured: ',num2str(fitH1.a*1e7,'%10.5e'),' \pm ', num2str(fitH1.aerr*1e7,'%10.5e')])
+    %Second Peak
+    indices = ~isnan(x(:,6));
+	resFreqTwo = x(indices,6)./x(indices,9); %convert into fraction of sweep
+	resFreqTwo = x(indices,7) + resFreqTwo.*(x(indices,8)-x(indices,7)); %convert into kHz
+	display('First Peak Frequency vs. B')
+    figure
+	fitResFixB2 = linearFit(Btotal(indices),resFreqTwo - 2*fitA.a*(x(indices,8)-x(indices,7))./x(indices,9),ones(length(resFreqTwo),1)) %correction in arg2: 200 kHz is the sweep rate; mysterious factor of 2
+	%plot model
+	hold on
+	plot(Btotal(indices),699.81*Btotal(indices),'-r')
+	%annotate
+	title('Zeeman Resonance Frequencies for Rb 87 in a Fixed Magnetic Field')
+	xlabel('Total Magnetic Field [G]')
+	ylabel('Resonance Frequency [kHz]')
+	fontSize(16)
+	%print 
+	display('Expected g*mu_B/h = 6.998123e9')
+	display(['Measured: ',num2str(fitH2.a*1e7,'%10.5e'),' \pm ', num2str(fitH2.aerr*1e7,'%10.5e')])
+
+%% Final Steps
+    
 %cleanup
-	clear indices resFreqOne resFreqTwo Btotal
+	clear indices resFreqOne resFreqTwo Btotal x

@@ -9,8 +9,9 @@ function[fit] = linearFit(x,y,err,varargin)
 %  varargin can hold raw data x, raw data y; and additionally an array of
 %  indices to be excluded from the fit
 
+priorHoldState = ishold;
+
 %plot the raw data if provided
-figure
 hold on
 if nargin >= 4
     plot(varargin{1},varargin{2},'.','Color',[.87 .92 .98])
@@ -54,3 +55,10 @@ text(axisDim(1) + (axisDim(2)-axisDim(1))/10,axisDim(4) -...
     ['a = ',num2str(fit.a),' \pm ',num2str(fit.aerr)],...
     ['b = ',num2str(fit.b),' \pm ',num2str(fit.berr)],...
     ['\chi_\nu = ',num2str(fit.chi2)]})
+
+%return to prior hold state
+if priorHoldState
+	hold on
+else
+	hold off
+end

@@ -93,7 +93,7 @@
 %       Temperature of vapour chamber: 42.1 deg celsius
 %       Date recorded: Mon 25 Feb
 
-%tableB   [ 1:Current in the X [mA], 
+%tableH   [ 1:Current in the X [mA], 
 %           2:Current in the Y [mA],
 %           3:Current in the Z [mA],
 %           4:Magnetic Field as Measured by the Magnetometer [mG],
@@ -108,6 +108,22 @@
 %
 %       Date: 2/27/13
 
+%tableI   [ 1:Current in the X [mA], 
+%           2:Current in the Y [mA],
+%           3:Current in the Z [mA],
+%           4:Magnetic Field as Measured by the Magnetometer [mG],
+%           5:Resonance Frequency of the First Peak [s],
+%           6:Resonance Frequency of the Second Peak [s],
+%           7:Beginning of Sweep [kHz],
+%           8: End of Sweep [kHz],
+%           9: Duration of Sweep [s] ]
+%
+%       Description:
+%         fixed magnetic field, sweeping coil drive frequency
+%         scope is now DC coupled
+%
+%       Date: 2/27/13
+
 home = pwd;
 
 %load the data
@@ -116,7 +132,7 @@ load data.mat;
 cd(home);
 addpath ./tools;
 addpath ./subscripts;
-IEarth = [165.7 -19.3 -33.3];  %currents that buck out Earth's magnetic field
+IEarth = [148.05 -24 -33.3];  %currents that buck out Earth's magnetic field
 
 %% Error analysis for sweep rate
 

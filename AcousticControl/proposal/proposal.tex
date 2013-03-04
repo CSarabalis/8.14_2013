@@ -70,9 +70,9 @@
 
 
 \begin{document}
-\title{Acoustic Control}
-\author         {Christopher J Sarabalis}
-\email          {dreambig@mit.edu}
+\title{Acoustic Control of Silica Beads}
+\author         {Christopher J Sarabalis \& Thomas DB Alcorn}
+\email          {dreambig@mit.edu, alcorn@mit.edu}
 \homepage{http://web.mit.edu/8.13/}
 \date{\today}
 \affiliation{MIT Department of Physics}
@@ -103,11 +103,34 @@ The fluid is coupled to the bead via viscous drag, the magnitude of which is det
 
 We assume that the motion of the bead does not significantly alter the fluid.  In so doing, the equation of motion for the fluid is simply the wave equation with dispersion relation $\omega = c \vec{k}$, where $c$ is the speed of sound of the medium.  These equations admit to standing wave solutions for the velocity of the fluid $w\left(\vec{x},t\right)$ and thereby the bead $x\left(t\right)$, confining the bead between velocity antinodes separated by $\lambda/2 = \pi/\vec{k}$.
 
-\section{Scales and Trap Characteristics}
+\section{Scales \& Trap Characteristics}
 
 In this section we compute the design specifications for the apparatus on the basis of the bead dynamics discussed above.
 
+Our key design problem is to generate a standing wave in the fluid surrounding the bead that will trap it in place. We will generate the standing waves $w(x,t)$ by oscillating one side of the flow channel, so to design our oscillation mechanism we need to know $|w|$, how large the oscillations should be to trap the bead.
 
+\subsection{Calculation of Oscillation Amplitude}
+
+The amplitude of the velocity standing wave, $|\dot{w}|$, is related to the trapping force $F$ by $D$, the drag coefficient, as in:
+\begin{equation} \label{eq:force_vel}
+F \approx D |\dot{w}|
+\end{equation}
+From optical trapping, we know that $D = 3 \pi \eta d$ where $\eta$ is the viscosity of the fluid and $d$ is the diameter of the bead. Re-arranging \ref{eq:force_vel}, we get $|\dot{w}| \approx \frac{F}{3 \pi \eta d}$. 
+
+For standing waves of wave-number $\vec{k}$, $|\dot{w}| = \omega |w|$ where $\omega = c |\vec{k}|$ is the angular frequency of the wave and $\lambda = \frac{2 \pi}{|\vec{k}|}$ is the wavelength. Therefore, we have determined that:
+\begin{equation}
+|w| = \frac{\lambda F}{6 \pi^2 c \eta d}
+\end{equation}
+
+The diameter of the bead is $d=1\mu m$. The force $F$ needed to trap a $1\mu m$ silica bead is taken to be $20pN$, as determined in our previous experiments in optical trapping.  In order to trap a $1\mu m$ silica bead, we need the wavelength $\lambda$ of the standing wave to be at least $1\mu m$, giving $|\vec{k}| = \frac{2 \pi}{10^{-6}m}$. We also have the speed of sound in water $c = 1.5 \times 10^3 m.s^{-1}$ and the viscosity of water $\eta = 10^{-3} Pa.s$. Substituting these values into the calculation, we obtain $|w| = 10^{-13}m$ or $0.1pm$ for the required size of the oscillations.
+
+\subsection{Impedance Matching}
+
+In order to eliminate reflections from the fluid back onto the transducer, we need to ensure that the impedance of the fluid is close to the impedance of the transducer. 
+
+The impedance of a coil of ?copper? with a magnet of mass $m$ attached to it is ...
+
+The impedance $z$ of a fluid is known to be $z = \rho c$ where $\rho$ is the density of the fluid and $c$ is the speed of sound. The density of water is $\rho = 10^3 kg.m^{-3}$ and the speed of sound in water is $c = 1.5 \times 10^3 m.s^{-1}$. Therefore, the impedance of water is $z = 1.5\times10^6 kg.m^{-2}.s^{-1}$.
 
 \section{Apparatus}
 

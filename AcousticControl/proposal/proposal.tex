@@ -1,0 +1,126 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Sample template for MIT Junior Lab Student Written Summaries
+% Available from http://web.mit.edu/8.13/www/Samplepaper/sample-paper.tex
+%
+% Last Updated August 30, 2011
+%
+% Adapted from the American Physical Societies REVTeK-4.1 Pages
+% at http://publish.aps.org
+%
+% ADVICE TO STUDENTS: Each time you write a paper, start with this
+%    template and save under a new filename.  If convenient, don't
+%    erase unneeded lines, just comment them out.  Often, they
+%    will be useful containers for information.
+%
+% Using pdflatex, images must be either PNG, GIF, JPEG or PDF.
+%     Turn eps to pdf using epstopdf.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PREAMBLE
+% The preamble of a LaTeX document is the set of commands that precede
+% the \begin{document} line.  It contains a \documentclass line
+% to load the REVTeK-4.1 macro definitions and various \usepackage
+% lines to load other macro packages.
+%
+% ADVICE TO STUDENTS: This preamble contains a suggested set of
+%     class options to generate a ``Junior Lab'' look and feel that
+%     facilitate quick review and feedback from one's peers, TA's
+%     and section instructors.  Don't make substantial changes without
+%     first consulting your section instructor.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\documentclass[aps,twocolumn,secnumarabic,balancelastpage,amsmath,amssymb,nofootinbib]{revtex4}
+\documentclass[aps,twocolumn,secnumarabic,balancelastpage,amsmath,amssymb,nofootinbib]{revtex4-1}
+
+%N.B. - Different computers have different packages installed.  To compile this template in the current
+    % Athena environment, REVTeX 4.1 must be used.  To use the older REVTeX 4, use the commented out
+    % Documentclass instead.  If you are unable to compile the template at all, you
+    % may need to update your LaTeX packages.  Don't hesitate to speak with your section instructor or a 
+    % TA if you're having issues getting this template to compile.
+
+% Documentclass Options
+    % aps, prl stand for American Physical Society and Physical Review Letters respectively
+    % twocolumn permits two columns, of course
+    % nobalancelastpage doesn't attempt to equalize the lengths of the two columns on the last page
+        % as might be desired in a journal where articles follow one another closely
+    % amsmath and amssymb are necessary for the subequations environment among others
+    % secnumarabic identifies sections by number to aid electronic review and commentary.
+    % nofootinbib forces footnotes to occur on the page where they are first referenced
+        % and not in the bibliography
+    % REVTeX 4.1 is a set of macro packages designed to be used with LaTeX 2e.
+        % REVTeX is well-suited for preparing manuscripts for submission to APS journals.
+       
+
+
+\usepackage{lgrind}        % convert program listings to a form includable in a LaTeX document
+\usepackage{chapterbib}    % allows a bibliography for each chapter (each labguide has it's own)
+\usepackage{color}         % produces boxes or entire pages with colored backgrounds
+\usepackage{graphics}      % standard graphics specifications
+\usepackage[pdftex]{graphicx}      % alternative graphics specifications
+\usepackage{longtable}     % helps with long table options
+\usepackage{epsf}          % old package handles encapsulated post script issues
+\usepackage{bm}            % special 'bold-math' package
+%\usepackage{asymptote}     % For typesetting of mathematical illustrations
+\usepackage{thumbpdf}
+\usepackage[colorlinks=true]{hyperref}  % this package should be added after all others
+                                        % use as follows: \url{http://web.mit.edu/8.13}
+
+
+
+\begin{document}
+\title{Acoustic Control}
+\author         {Christopher J Sarabalis}
+\email          {dreambig@mit.edu}
+\homepage{http://web.mit.edu/8.13/}
+\date{\today}
+\affiliation{MIT Department of Physics}
+
+
+\begin{abstract}
+
+\end{abstract}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Our objective is to create acoustic standing waves in one dimension in a fluid medium and use them to influence the position of free-floating and confined silica beads. Along the way, we propose the creation of a more direct means of controlling the fluid (as opposed to stage oscillation), broadening the space of possible experiments using Junior Lab's optical trap.
+
+\section{Bead Mechanics}
+
+We can model the motion of a silica bead in water using the framework of Newtonian mechanics.  The position of a bead, $x\left(t\right)$, in an elastic medium whose state is specified by its displacement over all space and time by $w\left(\vec{x},t\right)$ is governed by
+
+\begin{equation}
+F = m \ddot{x} = D\left(\dot{w}\left(x,t\right)-\dot{x}\right)\label{eq:newton}.
+\end{equation}
+
+The fluid is coupled to the bead via viscous drag, the magnitude of which is determined by the drag coefficient $D$ and the magnitude of the relative velocity of fluid flowing past the bead.   When $m \ll D$ (the low Reynolds number regime in which we are interested), Equation \ref{eq:newton} reduces to
+
+\begin{equation}
+\dot{x} = \dot{w}.
+\end{equation}
+
+We assume that the motion of the bead does not significantly alter the fluid.  In so doing, the equation of motion for the fluid is simply the wave equation with dispersion relation $\omega = c \vec{k}$, where $c$ is the speed of sound of the medium.  These equations admit to standing wave solutions.
+
+In a standing wave the antinode of the fluid's pressure is a node of the fluids displacement and therefore velocity. If we disregard inertial effects, the bead will move as the fluid does between displacement nodes. The bead swings rapidly through pressure nodes (displacement/velocity antinodes) moving ever more slowly toward pressure antinodes. Before the bead reaches the pressure antinode, the standing wave swings through zero and the bead heads in the opposite direction.
+
+\section{Scales and Trap Characteristics}
+
+\section{Apparatus}
+
+\section{Measurements}
+
+\section{Schedule}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Place all of the references you used to write this paper in a file
+% with the same name as following the \bibliography command
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibliography{proposal}
+
+
+
+\end{document}

@@ -54,7 +54,7 @@ tit2='Resonance peak movement as Y-coil current varies: Peak 2';
 %Peak1
 [p S] = polyfit(x, y1.^2,2);  % is a row vector representing the result of the polyfit
 xpoly1 = p(1)*x.^2 + p(2)*x + p(3);
-bearth_y = -0.5*p(2)/p(3);  % calculate b_{earth,y} from C/B in chris's notation
+bearth_y = -0.5*p(2)/p(1);  % calculate b_{earth,y} from C/B in chris's notation
 
 figure()
 hold on
@@ -69,7 +69,7 @@ gtext({['f_{res}^2 = ' num2str(p(1)) ' b_z^2 + ' num2str(p(2)) ' b_z + ' num2str
 %Peak2
 [p S] = polyfit(x, y2.^2,2);  % is a row vector representing the result of the polyfit
 xpoly2 = p(1)*x.^2 + p(2)*x + p(3);
-bearth_y = -0.5*p(2)/p(3);  % calculate b_{earth,y} from C/B in chris's notation
+bearth_y = -0.5*p(2)/p(1);  % calculate b_{earth,y} from C/B in chris's notation
 
 figure()
 hold on
@@ -136,7 +136,7 @@ tit='Resonance peak movement as X-coil current varies: Peak 2';
 %Peak1
 [p S] = polyfit(x, y1.^2,2);  % is a row vector representing the result of the polyfit
 xpoly1 = p(1)*x.^2 + p(2)*x + p(3);
-bearth_x = -0.5*p(2)/p(3);  % calculate b_{earth,x} from C/B in chris's notation
+bearth_x = -0.5*p(2)/p(1);  % calculate b_{earth,x} from C/B in chris's notation
 
 figure()
 hold on
@@ -151,7 +151,7 @@ gtext({['f_{res}^2 = ' num2str(p(1)) ' b_z^2 + ' num2str(p(2)) ' b_z + ' num2str
 %Peak2
 [p S] = polyfit(x, y2.^2,2);  % is a row vector representing the result of the polyfit
 xpoly2 = p(1)*x.^2 + p(2)*x + p(3);
-bearth_x = -0.5*p(2)/p(3);  % calculate b_{earth,y} from C/B in chris's notation
+bearth_x = -0.5*p(2)/p(1);  % calculate b_{earth,y} from C/B in chris's notation
 
 figure()
 hold on

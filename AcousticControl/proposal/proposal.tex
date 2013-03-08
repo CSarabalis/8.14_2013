@@ -70,8 +70,8 @@
 
 
 \begin{document}
-\title{Acoustic Control of Silica Beads}
-\author         {Christopher J Sarabalis \& Thomas DB Alcorn}
+\title{Acoustic Trap of Silica Beads}
+\author         {Christopher J. Sarabalis \& Thomas D.B. Alcorn}
 \email          {dreambig@mit.edu, alcorn@mit.edu}
 \homepage{http://web.mit.edu/8.13/}
 \date{\today}
@@ -79,72 +79,126 @@
 
 
 \begin{abstract}
-
+We propose the use of acoustic standing waves in one dimension in a fluid medium to confine  free-floating silica beads. We describe an apparatus for the creation of one-dimensional oscillations and estimate the design parameters necessary for overcoming Brownian motion.  The construction of such an apparatus provides a more direct means of controlling the fluid, broadening the space of possible experiments using Junior Lab's optical trap.
 \end{abstract}
 
 \maketitle
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Our objective is to create acoustic standing waves in one dimension in a fluid medium and use them to influence the position of free-floating and confined silica beads. Along the way, we propose the creation of a more direct means of controlling the fluid (as opposed to stage oscillation), broadening the space of possible experiments using Junior Lab's optical trap.
+Our objective is to create acoustic standing waves in one dimension in a fluid medium and use them to influence the position of free-floating and optically trapped silica beads. Our discussion begins with a physical motivation for the use of standing waves.
 
 \section{Bead Mechanics}
+\label{sec:beadmechanics}
 
-We can model the motion of a silica bead in water using the framework of Newtonian mechanics.  The position of a bead, $x\left(t\right)$, in an elastic medium whose state is specified by its displacement over all space and time by $w\left(\vec{x},t\right)$ is governed by
-
+We can model the motion of a silica bead in water using the framework of Newtonian mechanics.  The position of a bead, $x\left(t\right)$, in an elastic medium whose state is specified by its displacement over all space and time by $w\left(\mathbf{x},t\right)$ is governed by
 \begin{equation}
 F = m \ddot{x} = D\left(\dot{w}\left(x,t\right)-\dot{x}\right)\label{eq:newton}.
 \end{equation}
-
-The fluid is coupled to the bead via viscous drag, the magnitude of which is determined by the drag coefficient $D$ and the magnitude of the relative velocity of fluid flowing past the bead.   When $m \ll D$ (the low Reynolds number regime in which we are interested), Equation \ref{eq:newton} reduces to
-
+The fluid is coupled to the bead via viscous drag, the magnitude of which is determined by the drag coefficient $D = 3\pi\eta d$ and the velocity of the fluid relative to the bead.  Here $\eta$ is the dynamic viscosity of the fluid ($10^-3$ Pa$\cdot$s in water) and $d = 1\mu m$ is the bead's diameter.   When $m \ll D$ (the low Reynolds number regime in which we are interested), Equation \ref{eq:newton} reduces to
 \begin{equation}
 \dot{x} = \dot{w}.
 \end{equation}
 
-We assume that the motion of the bead does not significantly alter the fluid.  In so doing, the equation of motion for the fluid is simply the wave equation with dispersion relation $\omega = c \vec{k}$, where $c$ is the speed of sound of the medium.  These equations admit to standing wave solutions for the velocity of the fluid $w\left(\vec{x},t\right)$ and thereby the bead $x\left(t\right)$, confining the bead between velocity antinodes separated by $\lambda/2 = \pi/\vec{k}$.
+We assume that the motion of the bead does not significantly alter the fluid.  In so doing, the equation of motion for the fluid is simply the wave equation with dispersion relation $\omega = c \left|\mathbf{k}\right|$, where $c$ is the speed of sound of the medium.  These equations admit to standing wave solutions for the velocity of the fluid $w\left(\mathbf{x},t\right)$. Thereby the bead is confined between the fluid's velocity nodes separated by $\lambda/2 = \pi/\mathbf{k}$.
+
+The bead accelerates from rest to its terminal velocity for typical disturbances in 1 $\mu$s\cite{purcell}.  This effect can be neglected for fluid velocity fields oscillating with periods on the order of 10 to 100 $\mu$s.  This puts a lower bound of 0.8 to 7.5 cm on size of a trap governed by low Reynolds number, high viscosity dynamics.  
+
+Numerical models in which bead inertia is considered suggest stable traps of higher frequencies and therefore smaller trap sizes.
+
+By creating standing waves in the fluid, we should be able to acoustically trap the bead.
+
+\section{Apparatus}
+\label{sec:apparatus}
+
+In this section we detail the construction of the flow channel and the transducers used to drive the fluid.  The channel has a square cross-section with 200 $\mu m$ side lengths, or 10 thousandths of an inch.  Each end terminates in an oscillator consisting of an elastic membrane, a magnet, and a coil.
+
+The flow channel consists of a slide, two transparent spacers, and a slip forming the lower, middle, and upper layer of the flow channel, respectively.  The materials comprising the channel must be transparent to avoid reflecting the IR trap laser about the room. The layers are adhered with water-tight epoxy.  Membranes are adhered to each end of the flow channel.  A small magnet is adhered to each membrane terminating either end of the flow channel. The ratio of the stiffness of the membrane and mass of the magnets must be carefully matched to the impedance of the fluid medium.  Mismatches will result in poor transmission and reflections that will compromise the fidelity of the desired standing waves.
+
+    The following variant of the system is more easily constructed.  The flow channel is machined into a thin sheet of ABS.  The channel is terminated before the edges of the sheet leaving a thin rib to act as the membrane.  This is easily constructed on a mill with tolerances of one thousandth of an inch.  Adjusting the rib's thickness adjusts the effective spring constant of the transducer.  
+
+The coils used to drive the magnets are to be no bigger in cross section than a pencil, making the assembly easy to remove and setup.  The experiment should in no way hinder other groups using the optical trapping apparatus.  The coils can be driven by a function generator or amplified and sent to an oscilloscope to measure the motion of the fluid.
+
+An alternative to driving the membrane with magnets is piezoelectric transducers.
 
 \section{Scales \& Trap Characteristics}
 
-In this section we compute the design specifications for the apparatus on the basis of the bead dynamics discussed above.
+In this section we compute the design specifications for the apparatus on the basis of the bead dynamics discussed above. Primarily, we must overcome the Brownian forces on the bead, which we were able to measure in previous optical trapping experiments\cite{optTrappingPaper}. As outlined in Section \ref{sec:beadmechanics}, we will generate a standing wave in the fluid surrounding the bead by oscillating one wall of the flow channel. In order to design the transducer with which we will acoustically trap the silica bead, we need to determine the scale of the force that the transducer must apply to the channel wall. 
 
-Our key design problem is to generate a standing wave in the fluid surrounding the bead that will trap it in place. We will generate the standing waves $w(x,t)$ by oscillating one side of the flow channel, so to design our oscillation mechanism we need to know $|w|$, how large the oscillations should be to trap the bead.
+\subsection{Calculation of Transducer Oscillation Pressure}
 
-\subsection{Calculation of Oscillation Amplitude}
-
-The amplitude of the velocity standing wave, $|\dot{w}|$, is related to the trapping force $F$ by $D$, the drag coefficient, as in:
+The amplitude of the fluid's velocity field standing wave, $|\dot{w}|$, is related to the trapping force $F$ by $D$, the drag coefficient, as in:
 \begin{equation} \label{eq:force_vel}
-F \approx D |\dot{w}|
+F = D |\dot{w}|
 \end{equation}
-From optical trapping, we know that $D = 3 \pi \eta d$ where $\eta$ is the viscosity of the fluid and $d$ is the diameter of the bead. Re-arranging \ref{eq:force_vel}, we get $|\dot{w}| \approx \frac{F}{3 \pi \eta d}$. 
-
-For standing waves of wave-number $\vec{k}$, $|\dot{w}| = \omega |w|$ where $\omega = c |\vec{k}|$ is the angular frequency of the wave and $\lambda = \frac{2 \pi}{|\vec{k}|}$ is the wavelength. Therefore, we have determined that:
+Recalling our expression for the drag coefficient, $D = 3 \pi \eta d$ where $\eta$ is the viscosity of the fluid and $d$ is the diameter of the bead. Re-arranging \ref{eq:force_vel}, we get $|\dot{w}| = \frac{F}{3 \pi \eta d}$. For standing waves of wave-number $\vec{k}$, $|\dot{w}| = \omega |w|$ where $\omega = c |\vec{k}|$ is the angular frequency of the wave and $c$ is the speed of sound in the fluid. Therefore, the amplitude of the fluid's displacement field is given by:
 \begin{equation}
-|w| = \frac{\lambda F}{6 \pi^2 c \eta d}
+|w| = \frac{F}{3 \pi k c \eta d}.
 \end{equation}
+The above expression is a measure of the amplitude of the oscillation that the transducer must generate. We can convert this into the pressure that the transducer must apply using the Navier-Stokes equation:
+\begin{equation}
+\rho \frac{\delta \dot{w}}{\delta t} + \rho \dot{w} \nabla \dot{w} = - \nabla p + \mu \nabla^2 \dot{w}
+\end{equation}
+We are only interested in the scale of these quantities, so we will take absolute values everywhere. For standing waves, all of these terms can be written simply in terms of $|w|$: $\nabla |\dot{w}| = k \omega |w|$, $\nabla^2|\dot{w}| = k^2 \omega |w|$ and $\left|\frac{\delta \dot{w}}{\delta t}\right| = \omega^2 |w|$. Additionally, $Re = \frac{\rho c}{\mu k}$ is the Reynold's number, which in our case is $Re<<1$. These substitutions lead to:
+\begin{equation}
+|\nabla p| = |w| \frac{\rho(ck)^2}{Re} = \frac{F \rho c k}{3 \pi \eta d ~Re}
+\end{equation}
+The diameter of the bead is $d=1\mu$m. The force $F$ needed to trap a $1\mu$ silica bead is generously taken to be $100$pN\cite{optTrappingPaper}.  In order to trap a $1\mu$m silica bead, we need the wavelength $\lambda$ of the standing wave to be at least $100\mu$m, giving $|\vec{k}| = \frac{2 \pi}{10^{-4}}$m$^{-1}$. We also have the speed of sound in water $c = 1.5 \times 10^3 $m.s$^{-1}$, the viscosity of water $\eta = 10^{-3} $Pa.s, the density of water $\rho = 1000$kg.m$^{-3}$ and therefore a Reynold's number $Re=10^{-3}$. Substituting these values into the calculation, we obtain $|\nabla p| = 1\mu$N.$\mu$m$^{-3}$ for the pressure differential that the transducer must apply to the channel wall.
 
-The diameter of the bead is $d=1\mu m$. The force $F$ needed to trap a $1\mu m$ silica bead is taken to be $20pN$, as determined in our previous experiments in optical trapping.  In order to trap a $1\mu m$ silica bead, we need the wavelength $\lambda$ of the standing wave to be at least $1\mu m$, giving $|\vec{k}| = \frac{2 \pi}{10^{-6}m}$. We also have the speed of sound in water $c = 1.5 \times 10^3 m.s^{-1}$ and the viscosity of water $\eta = 10^{-3} Pa.s$. Substituting these values into the calculation, we obtain $|w| = 10^{-13}m$ or $0.1pm$ for the required size of the oscillations.
+This conclusion is supported by another argument. Since the integral of pressure over a closed surface is equal to the net change in momentum within the surface, the divergence of the pressure is equal to the time derivative of the momentum density. Therefore, we should expect that $\nabla p \propto \left|\frac{\delta \dot{w}}{\delta t}\right| = (ck)^2 |w|$, which is the result we obtained.
 
 \subsection{Impedance Matching}
 
-In order to eliminate reflections from the fluid back onto the transducer, we need to ensure that the impedance of the fluid is close to the impedance of the transducer. 
+As described in the Section \ref{sec:apparatus}, the fluid and oscillator must be carefully impedance matched to avoid reflections.
 
-The impedance of a coil of ?copper? with a magnet of mass $m$ attached to it is ...
+The characteristic impedance $z$ of a fluid is $\rho c$ where $\rho$ is the density of the fluid and $c$ is the speed of sound. The density of water is $\rho = 10^3 kg.m^{-3}$ and the speed of sound in water is $c = 1.5 \times 10^3 m.s^{-1}$. Therefore, the impedance of water is $z = 1.5\times10^6 kg.m^{-2}.s^{-1}$.  We can calculate the impedance of the oscillator, modeling it as a mass-spring system. This gives
+\begin{equation}
+\frac{1}{Z_{total}} = \sum_i{\frac{1}{Z_i}},
+\end{equation}
+where $Z_{\textrm{mass}} = i \omega m$ and $Z_{\textrm{spring}} = \frac{k}{i\omega}$. 
 
-The impedance $z$ of a fluid is known to be $z = \rho c$ where $\rho$ is the density of the fluid and $c$ is the speed of sound. The density of water is $\rho = 10^3 kg.m^{-3}$ and the speed of sound in water is $c = 1.5 \times 10^3 m.s^{-1}$. Therefore, the impedance of water is $z = 1.5\times10^6 kg.m^{-2}.s^{-1}$.
+\section{Measurements and Benchmarks}
 
-\section{Apparatus}
+Before investigating the coupling between the bead and fluid, we characterize the behavior of the channel.  We can drive the fluid with one oscillator and measure the response on a scope at the other end. Taking the ratio of the Laplace transform of the response and input, we measure this linear, time-invariant system's transfer function.  From this we can extract the medium's dispersion relation and frequency dependent attenuation.  The attenuation should not exceed 0.01 dB over the length of the 6 cm channel up through 1 MHz \cite{attenuation}. 
 
-In this section we detail the construction of the flow channel and transducers.
+Provided successful channel construction as verified by the above measurements, we can proceed to measure the transfer function that maps the driving oscillator to a bead in an optical trap of a particular laser intensity.  This transfer function $H(s,y)$ depends on the complex Laplace argument $s$ and the position of the bead in the channel $y$.  We disregard the transfer function's dependence on the bead's position in the plane perpendicular to the axis of the channel.  Calibration measurements from previous experiments, collected as detailed in an earlier paper\cite{optTrappingPaper}, will be used to map QPD voltages to bead displacements.  If the measured transfer function indicates weak coupling between the fluid and bead, adjustments will be made to the oscillator to increase the amplitude of the fluid oscillations.  Particularly, the size of the coil and/or magnet will be increased.
 
-The flow channel consists of a slide, two transparent spacers, and a slip forming the lower, middle, and upper layer of the flow channel respectively. The layers can be adhered together with water-tight epoxy. The stiffness of the membrane on either end of the flow channel as well as the mass of the attached magnet is critical because of impedance matching. With fixed cross section of ~1 mm2, the longitudinal linear dimension of the magnet in the axis of the flow channel can be adjusted to adjust the mass of the oscillator. This dimension affects the magnetization of the magnet and therefore the current necessary to drive a wave of a particular amplitude given a number of turns of the coil N. Furthermore each coil must be impedance matched to the function generator with 50ω impedance.
+Provided sufficient fluid-bead coupling, we will attempt to acoustically trap the bead.  We begin by creating a standing pressure wave in the fluid. A standing wave of the form $w(\mathbf{x},t) = P_0\sin\left(\mathbf{k}\cdot\mathbf{x}\right)\sin\left(\omega t\right)$ can be achieved by driving both oscillators in phase with the same frequency and amplitude.  We can smoothly vary the driving frequency.  Frequencies for which the bead's response is sinusoidal are standing waves with wavelengths satisfying
+\begin{equation}
+n \frac{\lambda}{2} = L,
+\end{equation}
+where n is an integer and $L$ is the length of the cavity.  Measurements of multiple modes can be used to refine $L$.  Once a sinusoidal response is observed, the stage position can be slowly varied using the PZTs to vary $y$ and thereby characterize the spatial quality of the standing wave.  
 
-The coils are to be no bigger in cross section than a pencil. They should be easy both to remove and setup on the apparatus.
+At this point we can test the model derived in Section \ref{sec:beadmechanics} for beads freely moving about the medium.  We can monitor regions of the channel and, in lieu of more quantitative tests, study the qualitative aspects of free bead motion.  We expect beads to avoid passing velocity nodes and move rapidly about antinodes, the locations of which we found in the previous part of the experiment.
 
-We'd like to construct both a channel with two transducers, and a channel with one transducer and an ~infinite impedance termination. We predict the latter will ease the creation of standing waves but not controllably in the aforementioned sense.
+\section{Potential Expenditures}
 
-\section{Measurements}
+These PZTs are inessential, but provide a backup mechanism to drive the field given complications in constructing electromagnetic transducers.
 
-\section{Schedule}
+\begin{tabular}{ | p{2.1cm} | c | p{5.7cm} | }
+\hline
+\textbf{Item} & \textbf{Cost} & \textbf{Reference} \\\hline
+Piezoelectric transducer & \$72 & http://www.thorlabs.com/thorPro duct.cfm?partNumber=AE0203D04F \\\hline
+\end{tabular}
+
+\section{Summary}
+
+\begin{enumerate}
+
+\item Build a channel terminating in transducers to acoustically drive the fluid.
+
+\item Measure the speed of sound, frequency-dependent attenuation, and signal distortion driving the cavity with one transducer and measuring the response on the other.
+
+\item Measure the coupling between a transducer and a trapped bead by varying driving frequency and amplitude, and recording the QPD voltage over time.
+
+\item Create a standing wave in the channel and check for this condition via the motion of a trapped bead.
+
+\item Study the motion of free floating beads in acoustic standing waves.
+
+\end{enumerate}
+~
+~
+~
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

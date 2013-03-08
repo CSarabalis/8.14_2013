@@ -30,11 +30,61 @@ figure
 
 for i = 1:12
     for j = 1:length(data{i}.range)
-        x = log(data{i}.direction{j}*(data{i}.data(data{i}.range{j},2) - data{i}.offset{j}));
-        plot(data{i}.data(data{i}.range{j},1),x,'.')
-        startIndex = input('Start Index: ');
-        stopIndex  = input('Stop  Index: ');
-        
+        %loop through to get a fit
+        response = 1;
+        while response
+            %transform the data
+            indices = data{i}.range{j};
+            x = log(data{i}.direction{j}*(data{i}.data(indices,2) - data{i}.offset{j}));
+            x = real(x);
+            %plot for selection
+            plot(indices,x,'.')
+            xlabel('indices in full data set')
+            ylabel('linearized voltage')
+            title(['Data set: ',num2str(i),', Slice: ',num2str(j)])
+            %get input
+            startIndex = input('Start Index for Exp: ');
+            stopIndex  = input('Stop  Index for Exp: ');
+            %cut the data and transform it
+            indices = startIndex:stopIndex;
+            x = log(data{i}.direction{j}*(data{i}.data(indices,2) - data{i}.offset{j}));
+            x = real(x);
+            %bin and fit the data
+            binned = binForFit(data{i}.data(indices,1),x,1:4:length(x));
+            figure
+            linearFit(binned(:,1),binned(:,2),binned(:,3))
+            %ask for approval
+            response = input('Wanna try again? ');
+            close
+        end
+        %store indices
+        data{i}.expRange{j} = indices;
+        %display data and ask for the existence of a linear regime
+        plot(data{i}.data(data{i}.range{j},1),data{i}.data(data{i}.range{j},2),'.')
+        response = input('Is there a linear regime? ')
+        if response
+            while response
+                %plot for selection
+                plot(data{i}.range{j},data{i}.data(data{i}.range{j},2),'.')
+                xlabel('indices in full data set')
+                ylabel('linearized voltage')
+                title(['Data set: ',num2str(i),', Slice: ',num2str(j)])
+                %get input
+                startIndex = input('Start Index for Exp: ');
+                stopIndex  = input('Stop  Index for Exp: ');
+                indices = startIndex:stopIndex;
+                %bin and fit the data
+                figure
+                binned = binForFit(data{i}.data(:,1),data{i}.data(:,2),startIndex:4:stopIndex);
+                linearFit(binned(:,1),binned(:,2),binned(:,3))
+                %ask for approval
+                response = input('Wanna try again? ');
+                close
+            end
+            data{i}.linRange{j} = indices;
+        else
+            data{i}.linRange{j} = NaN;
+        end
     end
 end
 close

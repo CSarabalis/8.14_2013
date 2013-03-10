@@ -138,7 +138,7 @@ bearth_y = mean([bearth_y1, bearth_y2]);
 uncert_bearth_y = mean([uncert_bearth_y1, uncert_bearth_y2]);
 
 IEarth = [b2i(bearth_x,'x') b2i(bearth_y,'y') -33.3]; %currents that buck out Earth's magnetic field
-uncert_IEarth = [b2i(uncert_bearth_x,'x') b2i(uncert_bearth_y,'y') 0.1];
+uncert_IEarth = [b2i(uncert_bearth_x,'x') b2i(uncert_bearth_y,'y') 0.5];
 
 % IEarth = [148.05 -24 -33.3];  %old one
 

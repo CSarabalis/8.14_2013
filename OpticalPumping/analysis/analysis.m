@@ -132,13 +132,13 @@ setup;
 tableF_analysis_geomagnetic_field
 
 bearth_x = mean([bearth_x1, bearth_x2]);
-uncert_bearth_x = mean([uncert_bearth_x1, uncert_bearth_x2]);
+uncert_bearth_x = mean([uncert_bearth_x1, uncert_bearth_x2])/sqrt(2);
 
 bearth_y = mean([bearth_y1, bearth_y2]);
-uncert_bearth_y = mean([uncert_bearth_y1, uncert_bearth_y2]);
+uncert_bearth_y = mean([uncert_bearth_y1, uncert_bearth_y2])/sqrt(2);
 
 IEarth = [b2i(bearth_x,'x') b2i(bearth_y,'y') -33.3]; %currents that buck out Earth's magnetic field
-uncert_IEarth = [b2i(uncert_bearth_x,'x') b2i(uncert_bearth_y,'y') 0.5];
+uncert_IEarth = [b2i(uncert_bearth_x,'x') b2i(uncert_bearth_y,'y') 0.4];
 
 % IEarth = [148.05 -24 -33.3];  %old one
 

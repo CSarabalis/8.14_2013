@@ -125,14 +125,27 @@
 %       Date: 2/27/13
 
 home = pwd;
+setup;
 
-%load the data
-cd ../data;
-load data.mat;
-cd(home);
-addpath ./tools;
-addpath ./subscripts;
-IEarth = [148.05 -24 -33.3];  %currents that buck out Earth's magnetic field
+%% Geo-magnetic field
+
+tableF_analysis_geomagnetic_field
+
+bearth_x = mean([bearth_x1, bearth_x2]);
+uncert_bearth_x = mean([uncert_bearth_x1, uncert_bearth_x2]);
+
+bearth_y = mean([bearth_y1, bearth_y2]);
+uncert_bearth_y = mean([uncert_bearth_y1, uncert_bearth_y2]);
+
+IEarth = [b2i(bearth_x,'x') b2i(bearth_y,'y') -33.3]; %currents that buck out Earth's magnetic field
+
+% IEarth = [148.05 -24 -33.3];  %old one
+
+% clean-up
+clear bearth_x1 bearth_x2 uncert_bearth_x1 uncert_bearth_x2 bearth_y1 bearth_y2...
+    uncert_bearth_y1 uncert_bearth_y2 bearth_x bearth_y uncert_bearth_x...
+    uncert_bearth_y
+
 
 %% Error analysis for sweep rate
 
@@ -225,4 +238,4 @@ clear ramp triangleUpramp triangleDownramp upIndicies Btotal
 
 %% Final Cleanup
 
-clear home IEarth
+clear home %IEarth

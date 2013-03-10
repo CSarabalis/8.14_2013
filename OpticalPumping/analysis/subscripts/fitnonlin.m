@@ -24,15 +24,15 @@ function [a, aerr] = fitnonlin(xlab, x, ylab, y, tit, sig, func, a0)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Some useful non-linear model functions are listed here:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function_sin        = @(x,a) a(1)*sin(a(2)*x+a(3));
-function_gaussian   = @(x,a) a(1)*(exp(-((x-a(2))/a(3)).^2));
-function_lorentzian = @(x,a) a(1)*(a(2)/(2*pi)./(((x-a(3)).^2)+(a(2)^2/4)));
-function_poisson    = @(x,a) a(1)*exp(x*log(a(2))-a(2)-gammaln(x+1));
-function_NIST       = @(x,a) a(1)*exp(-a(2)*x) +...
-                             a(3)*exp(-((x-a(4)).^2)/a(5)^2) +...
-                             a(6)*exp(-((x-a(7)).^2)/a(8)^2);
-function_bev82      = @(x,a) a(1)+a(2)*exp(-x/a(4))+a(3)*exp(-x/a(5));
-function_hyperbola  = @(x,a) a(1).^2*sqrt(1+(x./a(2)).^2);
+% function_sin        = @(x,a) a(1)*sin(a(2)*x+a(3));
+% function_gaussian   = @(x,a) a(1)*(exp(-((x-a(2))/a(3)).^2));
+% function_lorentzian = @(x,a) a(1)*(a(2)/(2*pi)./(((x-a(3)).^2)+(a(2)^2/4)));
+% function_poisson    = @(x,a) a(1)*exp(x*log(a(2))-a(2)-gammaln(x+1));
+% function_NIST       = @(x,a) a(1)*exp(-a(2)*x) +...
+%                              a(3)*exp(-((x-a(4)).^2)/a(5)^2) +...
+%                              a(6)*exp(-((x-a(7)).^2)/a(8)^2);
+% function_bev82      = @(x,a) a(1)+a(2)*exp(-x/a(4))+a(3)*exp(-x/a(5));
+% function_hyperbola  = @(x,a) a(1).^2*sqrt(1+(x./a(2)).^2);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % For non-linear fits using the Levenberg-Marquardt method, if you want to use
@@ -40,12 +40,12 @@ function_hyperbola  = @(x,a) a(1).^2*sqrt(1+(x./a(2)).^2);
 % expressions for derivatives in the following cell dYda, and let sgn be 1
 % instead of 0. Note: the definition of dYda cannot be commented out since
 % it has to be defined no matter whether it is actually used.
-sgn=0;  % Ignore the following analytic derivatives and calculate them numerically instead (usual case)
-dYda={@(x,a) 1,
-     @(x,a) exp(-x/a(4)),
-     @(x,a) exp(-x/a(5)),
-     @(x,a) a(2)/a(4)^2*exp(-x/a(4)).*x,
-     @(x,a) a(3)/a(5)^2*exp(-x/a(5)).*x};
+% sgn=0;  % Ignore the following analytic derivatives and calculate them numerically instead (usual case)
+% dYda={@(x,a) 1,
+%      @(x,a) exp(-x/a(4)),
+%      @(x,a) exp(-x/a(5)),
+%      @(x,a) a(2)/a(4)^2*exp(-x/a(4)).*x,
+%      @(x,a) a(3)/a(5)^2*exp(-x/a(5)).*x};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

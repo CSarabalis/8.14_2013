@@ -20,15 +20,18 @@ end
 
 figure
 
-% for i = 1:12
-%     for j = 1:length(data{i}.range)
-%         plot(data{i}.data(data{i}.range{j},2),'.')
-%         data{i}.direction{j} = input('1 for decaying, -1 for rising: ');
-%         data{i}.offset{j}    = input('Offset: ');
-%     end
-% end
-
+%Get info necessary to transform each curve into a decaying exponential
 for i = 1:12
+    for j = 1:length(data{i}.range)
+        plot(data{i}.data(data{i}.range{j},2),'.')
+        data{i}.direction{j} = input('1 for decaying, -1 for rising: ');
+        data{i}.offset{j}    = input('Offset: ');
+    end
+end
+
+%loop through files 1:12
+for i = 1:12
+    %loop through all ranges specified by the cut script
     for j = 1:length(data{i}.range)
         %loop through to get a fit
         response = 1;
@@ -87,4 +90,5 @@ for i = 1:12
         end
     end
 end
+
 close

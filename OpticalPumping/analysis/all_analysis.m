@@ -130,6 +130,7 @@ setup;
 %% Geo-magnetic field
 
 tableF_analysis_geomagnetic_field
+geoZ
 
 bearth_x = mean([bearth_x1, bearth_x2]);
 uncert_bearth_x = mean([uncert_bearth_x1, uncert_bearth_x2])/sqrt(2);
@@ -137,15 +138,28 @@ uncert_bearth_x = mean([uncert_bearth_x1, uncert_bearth_x2])/sqrt(2);
 bearth_y = mean([bearth_y1, bearth_y2]);
 uncert_bearth_y = mean([uncert_bearth_y1, uncert_bearth_y2])/sqrt(2);
 
-IEarth = [b2i(bearth_x,'x') b2i(bearth_y,'y') -33.3]; %currents that buck out Earth's magnetic field
-uncert_IEarth = [b2i(uncert_bearth_x,'x') b2i(uncert_bearth_y,'y') 0.4]; %uncerts in buck-out currents
+bearth_z = mean([bearth_z1, bearth_z2]);
+uncert_bearth_z = mean([uncert_bearth_z1, uncert_bearth_z2])/sqrt(2);
 
-% IEarth = [148.05 -24 -33.3];  %old one
+IEarth = [b2i(bearth_x,'x') b2i(bearth_y,'y') ...
+    b2i(bearth_z,'z')]; %currents that buck out Earth's magnetic field
+uncert_IEarth = [b2i(uncert_bearth_x,'x') b2i(uncert_bearth_y,'y')...
+    b2i(uncert_bearth_z,'z')]; %uncerts in buck-out currents
+
+% IEarth = [148.05 -24 -33.3];  %old one WRONG
+
+% bearth_x
+% uncert_bearth_x
+% bearth_y
+% uncert_bearth_y
+% bearth_z
+% uncert_bearth_z
 
 % clean-up
 clear bearth_x1 bearth_x2 uncert_bearth_x1 uncert_bearth_x2 bearth_y1 bearth_y2...
     uncert_bearth_y1 uncert_bearth_y2 bearth_x bearth_y uncert_bearth_x...
-    uncert_bearth_y
+    uncert_bearth_y bearth_z1 bearth_z2 uncert_bearth_z1 uncert_bearth_z2...
+    bearth_z uncert_bearth_z
 
 
 %% Error analysis for sweep rate

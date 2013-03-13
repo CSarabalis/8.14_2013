@@ -64,8 +64,10 @@ sig2 = grads.*uncert_B + sig;
 
 figure
 hold on
-errorbar((y_mag_field(yrange)+0.05670).^2,peak_1_freq(yrange).^2,instr_uncert(yrange),'*r')
-errorbar((y_mag_field(yrange)+0.05670).^2,peak_2_freq(yrange).^2,instr_uncert(yrange),'*')
+%errorbar((y_mag_field(yrange)+0.05670).^2,peak_1_freq(yrange).^2,instr_uncert(yrange),'*r')
+%errorbar((y_mag_field(yrange)+0.05670).^2,peak_2_freq(yrange).^2,instr_uncert(yrange),'*')
+Ylin1 = linearFit((y_mag_field(yrange)+0.05670).^2,peak_1_freq(yrange).^2,sig1)
+Ylin2 = linearFit((y_mag_field(yrange)+0.05670).^2,peak_2_freq(yrange).^2,sig2)
 xlabel('(b_y-b_{y,geo}^2, [G]^2')
 ylabel('f^2 [kHz]^2')
 title('Linear relationship between B_y^2 and f^2 :: Y-coil')
@@ -228,8 +230,10 @@ sig2 = grads.*uncert_B + sig;
 
 figure
 hold on
-errorbar((x_mag_field(xrange)-0.3585).^2,peak_1_freq(xrange).^2,instr_uncert(xrange),'*r')
-errorbar((x_mag_field(xrange)-0.3585).^2,peak_2_freq(xrange).^2,instr_uncert(xrange),'*')
+%errorbar((x_mag_field(xrange)-0.3585).^2,peak_1_freq(xrange).^2,instr_uncert(xrange),'*r')
+%errorbar((x_mag_field(xrange)-0.3585).^2,peak_2_freq(xrange).^2,instr_uncert(xrange),'*')
+Xlin1 = linearFit((x_mag_field(xrange)-0.3585).^2,peak_1_freq(xrange).^2,sig1)
+Xlin2 = linearFit((x_mag_field(xrange)-0.3585).^2,peak_2_freq(xrange).^2,sig2)
 xlabel('(b_x-b_{x,geo}^2, [G]^2')
 ylabel('f^2 [kHz]^2')
 title('Linear relationship between B_x^2 and f^2 :: X-coil')

@@ -63,13 +63,15 @@ sig2 = grads.*uncert_B + sig;
 % % indicates Iy_earth is -19.3mA
 
 figure
-hold on
-errorbar((z_mag_field(zrange)+0.1902).^2,peak_1_freq(zrange).^2,instr_uncert(zrange),'*r')
-errorbar((z_mag_field(zrange)+0.1902).^2,peak_2_freq(zrange).^2,instr_uncert(zrange),'*')
+hold all
+%errorbar((z_mag_field(zrange)+0.1902).^2,peak_1_freq(zrange).^2,instr_uncert(zrange),'*r')
+%errorbar((z_mag_field(zrange)+0.1902).^2,peak_2_freq(zrange).^2,instr_uncert(zrange),'*')
+Zlin1 = linearFit((z_mag_field(zrange)+0.1902).^2,peak_1_freq(zrange).^2,sig1)
+Zlin2 = linearFit((z_mag_field(zrange)+0.1902).^2,peak_2_freq(zrange).^2,sig2)
 xlabel('(b_z-b_{z,geo}^2, [G]^2')
 ylabel('f^2 [kHz]^2')
 title('Linear relationship between B_z^2 and f^2 :: Z-coil')
-legend('Peak 1', 'Peak 2')
+legend('Peak 1 Fit', 'Peak 1 Data','Peak 2 Fit', 'Peak 2 Data')
 
 % 
 %% Fit hyperbolas (nonlin) :: Y

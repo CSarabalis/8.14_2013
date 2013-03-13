@@ -5,6 +5,7 @@
 % average)
 
 display('Measuring Coil Resistance')
+hold on
 figure
 
 %subplot(2,1,1)

@@ -33,8 +33,8 @@ tableB(:,11) =sqrt(sigInstrumentPrecision^2 + sigStatPeak1^2/numberOfSweeps +...
 
 
 
-%%
-% %plot the total B field calculated from Helmholtz currents and measured by
+
+%% plot the total B field calculated from Helmholtz currents and measured by
 % %   the magnetometer
 % figure
 % plot(Btotal,tableB(:,4)*0.001,'.')
@@ -48,6 +48,8 @@ tableB(:,11) =sqrt(sigInstrumentPrecision^2 + sigStatPeak1^2/numberOfSweeps +...
 % xlabel('Magnitude of B Calculated from Currents [G]')
 % ylabel('Magnitude of B Measured by Magnetometer [G]')
 
+
+%%  2x2 plot of the two days
 figure
 hold on
 subplot(2,2,1)
@@ -288,6 +290,11 @@ end
 averagedPeaks = averagedPeaks';
 display(['Sample Standard Deviation of Peak 1 from 8 runs: ',num2str(std(peaks(:,1)))]);
 display(['Sample Standard Deviation of Peak 2 from 8 runs: ',num2str(std(peaks(:,2)))]);
+
+%% Nonlinear Error analysis
+
+%not sure what I'm going to do here
+
 %% Final Steps
     
 %cleanup

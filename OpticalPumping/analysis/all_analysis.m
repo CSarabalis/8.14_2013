@@ -124,7 +124,6 @@
 %
 %       Date: 2/27/13
 
-set(0,'DefaultTextInterpreter','Latex')
 home = pwd;
 setup;
 
@@ -198,7 +197,7 @@ coilR
 
 %% Fixed Frequency, Sweep B: Table D and G
 
-vary_B
+vary_B_aggregated
 
 
 %% Final Cleanup

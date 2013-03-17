@@ -8,6 +8,7 @@ triangleDownramp2 = tableG([2,4],:);
 
 
 %% Table D
+% Sweep Characteristics: Ramp, 2Vpp, 1Hz
 
 Bfixed = [166.0 -19.28];
 % linear fit of peak 1
@@ -27,7 +28,7 @@ xlabel('Total Magnetic Field [G]')
 fontSize(16)
 
 % linear fit of peak 2
-Btotal = sqrt(i2b(166.0 - IEarth(1),'x').^2+i2b(-19.28-IEarth(2),'y').^2+i2b(v2i(1e-3*ramp(:,2))-IEarth(3),'z').^2);
+Btotal = sqrt(i2b(Bfixed(1) - IEarth(1),'x').^2+i2b(Bfixed(2)-IEarth(2),'y').^2+i2b(v2i(1e-3*ramp(:,2))-IEarth(3),'z').^2);
 
 %   currently doesn't take into account signal lag from tableA
 %figure
@@ -42,9 +43,13 @@ ylabel('Resonance Frequency [kHz]')
 xlabel('Magnetic Field in the Z [G]')
 fontSize(16)
 
-%% Table E
 
-Bfixed = [166.0 -19.28];
+
+%% Table E
+% Temp: 40.2C
+% Sweep Characteristics: Triangle, 2Vpp, 0.2Hz
+
+Bfixed = [165.9 -19.30];
 % linear fit of peak 1
 Btotal = sqrt(i2b(Bfixed(1) - IEarth(1),'x').^2+i2b(Bfixed(2)-IEarth(2),'y').^2+i2b(v2i(1e-3*triangleUpramp(:,3))-IEarth(3),'z').^2);
 
@@ -112,7 +117,11 @@ ylabel('Resonance Frequency [kHz]')
 xlabel('Magnetic Field in the Z [G]')
 fontSize(16)
 
+
+
 %% Table G
+% Temp: 42.1C
+% Sweep characteristics: Triangle, 1.2Vpp, 0.5Hz
 
 % Up ramps
 Bfixed = [148.4 -19.24];
@@ -210,5 +219,8 @@ errorbar(i2b(v2i(1e-3*tableG(upIndicies,2))-IEarth(3),'z'),tableG(upIndicies,1),
 errorbar(i2b(v2i(1e-3*tableG(upIndicies,4))-IEarth(3),'z'),tableG(upIndicies,1),tableG(upIndicies,6),'.r')
 errorbar(i2b(v2i(1e-3*ramp(:,3))-IEarth(3),'z'),ramp(:,1),i2b(v2i(ramp(:,5)),'z'),'.')
 
+%% clean-up
 
-clear ramp triangleUpramp triangleDownramp upIndicies Btotal
+clear ramp triangleDownramp triangleDownramp2 triangleUpramp triangleUpramp2 ...
+    Bfixed Btotal fitD1 fitD2 fitE1U fitE2D fitE2U fitE2D fitG1U fitG2D fitG2U ...
+    fitG2D upIndicies

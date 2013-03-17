@@ -124,6 +124,7 @@
 %
 %       Date: 2/27/13
 
+set(0,'DefaultTextInterpreter','Latex')
 home = pwd;
 setup;
 
@@ -148,12 +149,20 @@ uncert_IEarth = [b2i(uncert_bearth_x,'x') b2i(uncert_bearth_y,'y')...
 
 % IEarth = [148.05 -24 -33.3];  %old one WRONG
 
-% bearth_x
-% uncert_bearth_x
-% bearth_y
-% uncert_bearth_y
-% bearth_z
-% uncert_bearth_z
+bearth_x
+uncert_bearth_x
+bearth_y
+uncert_bearth_y
+bearth_z
+uncert_bearth_z
+
+gf1mubonh = ((Xlin1.a^0.5+Ylin1.a^0.5+Zlin1.a^0.5)/3)
+uncert_gf1mubonh = sqrt(0.5/3*((Xlin1.aerr^2/Xlin1.a+Ylin1.aerr^2/Ylin1.a+Zlin1.aerr^2/Ylin1.a)))
+gf2mubonh = ((Xlin2.a^0.5+Ylin2.a^0.5+Zlin2.a^0.5)/3)
+uncert_gf2mubonh = sqrt(0.5/3*((Xlin2.aerr^2/Xlin2.a+Ylin2.aerr^2/Ylin2.a+Zlin2.aerr^2/Ylin2.a)))
+
+gf2ongf1 = gf2mubonh/gf1mubonh
+uncert_gf2ongf1= sqrt(uncert_gf2mubonh^2/gf1mubonh^2 + (uncert_gf1mubonh*gf1mubonh/gf1mubonh^2)^2)
 
 % clean-up
 clear bearth_x1 bearth_x2 uncert_bearth_x1 uncert_bearth_x2 bearth_y1 bearth_y2...

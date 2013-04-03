@@ -30,15 +30,18 @@ errorbar(y(1:end-1),z,err,'.')
 xlabel('Photodiode Voltage [V]')
 ylabel('dV/dt [V/s]')
 
+data{i}.nonLin = cell(2);
+
 if ~isempty(model)
+  %store the model
+  data{i}.nonLin{j}.model = model;
   
+  display([num2str(i),',',num2str(j)])
   %nonlinear fit
   [data{i}.nonLin{j}.a,data{i}.nonLin{j}.aerr,data{i}.nonLin{j}.chisq,...
       data{i}.nonLin{j}.yfit,data{i}.nonLin{j}.corr]=levmar(y(1:end-1),...
       z,err,model,a0,0,0);
     
-  %store the model
-  data{i}.nonLin{j}.model = model;
 
   %plot fit
   subplot(2,1,2)

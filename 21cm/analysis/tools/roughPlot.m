@@ -1,7 +1,7 @@
 function bananas = roughPlot(data, index)
 
 a=data(index);
-a
+
 plot(a.freq, a.counts,'.')
 
 title(['Index: ' num2str(index)])
@@ -13,7 +13,7 @@ plotText = {['Time = ' a.timeText],['Az, El (+ Offset) = ' num2str(a.az) ', ' nu
     ['Glon, Glat = ' num2str(a.glon) ', ' num2str(a.glat)],...
     ['Mode = ' num2str(a.mode) ', NumPoints = ' num2str(a.numPoints)]};
 
-text(1420,1500,plotText);
+text(1420,60,plotText);
 
 
 end

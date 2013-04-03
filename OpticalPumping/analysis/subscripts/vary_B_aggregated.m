@@ -102,6 +102,8 @@ G2U = fitagg('GU',2,agg,Btotal)
 subplot(5,2,10)
 G2D = fitagg('GD',2,agg,Btotal)
 
+figure
+fitagg('D',1,agg,Btotal)
 
 %% Investigate effect of sweep characteristics on results
 
@@ -138,6 +140,12 @@ uncert_gf1mub = peak1.berr;
 
 gf2mub = peak2.b; % same units retardedness
 uncert_gf2mub = peak2.berr;
+
+gf1mub = 7.06; %currently give in stupid units (mV/kHz or something)
+uncert_gf1mub = 0.12;
+
+gf2mub = 4.72; % same units retardedness
+uncert_gf2mub = 0.08;
 
 gf1ongf2 = gf1mub/gf2mub
 uncert_gf2ongf1 = sqrt(uncert_gf1mub^2/gf2mub^2 + (uncert_gf2mub*gf1mub/gf2mub^2)^2)

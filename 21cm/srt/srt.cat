@@ -1,0 +1,132 @@
+* srt.cat file for socket version of srt
+* SIMULATE RECEIVER
+* SIMULATE ANTENNA 400
+* first word is key word
+* STATION: latitude longitude west in degrees
+* SAT: satellite ID then longitude west
+* SOU: source ra, dec, name, epoch
+* STATION 42.5 71.5 Haystack
+STATION 42.361 71.091 MIT
+* source coords epoch 1950 unless specified
+SOU 05 31 30  21 58 00 Crab
+SOU 05 32 48  -5 27 00 Orion
+SOU 05 42 00  -1 00 00 S8
+SOU 23 21 12  58 44 00 Cass
+SOU 00 00 00  00 00 00 Sun
+SOU 17 42 54 -28 50 00 SgrA
+SOU 06 29 12  04 57 00 Rosett
+SOU 18 17 30 -16 18 00 M17
+SOU 20 27 00  41 00 00 CygEMN
+SOU 00 00 00  00 00 00 Moon
+SOU 21 12 00  48 00 00 G90
+SOU 05 40 00  29 00 00 G180
+SOU 12 48 00  28 00 00 GNpole
+SOU 00 39 00  40 30 00 Androm
+SOU 05 14 12  18 44 00 AC1
+SOU 03 29 00  54 00 00 PULSAR
+SOU 08 30 00 -45 00 00 PS
+GALACTIC 10 1 RC_CLOUD
+GALACTIC 229 26 test
+GALACTIC 00 0 G00
+GALACTIC 05 0 G05
+GALACTIC 10 0 G10
+GALACTIC 15 0 G15
+GALACTIC 20 0 G20
+GALACTIC 25 0 G25
+GALACTIC 30 0 G30
+GALACTIC 35 0 G35
+GALACTIC 40 0 G40
+GALACTIC 45 0 G45
+GALACTIC 50 0 G50
+GALACTIC 55 0 G55
+GALACTIC 60 0 G60
+GALACTIC 65 0 G65
+GALACTIC 70 0 G70
+GALACTIC 75 0 G75
+GALACTIC 80 0 G80
+GALACTIC 85 0 G85
+*GALACTIC 90 0 G90
+GALACTIC 95 0 G95
+GALACTIC 100 0 G100
+GALACTIC 105 0 G105
+GALACTIC 110 0 G110
+GALACTIC 115 0 G115
+GALACTIC 120 0 G120
+GALACTIC 125 0 G125
+GALACTIC 130 0 G130
+GALACTIC 135 0 G135
+GALACTIC 140 0 G140
+GALACTIC 145 0 G145
+GALACTIC 150 0 G150
+GALACTIC 155 0 G155
+GALACTIC 160 0 G160
+GALACTIC 165 0 G165
+GALACTIC 170 0 G170
+GALACTIC 175 0 G175
+*GALACTIC 180 0 G180
+GALACTIC 185 0 G185
+GALACTIC 190 0 G190
+GALACTIC 195 0 G195
+GALACTIC 200 0 G200
+GALACTIC 205 0 G205
+GALACTIC 210 0 G210
+GALACTIC 215 0 G215
+GALACTIC 220 0 G220
+GALACTIC 225 0 G225
+GALACTIC 230 0 G230
+GALACTIC 235 0 G235
+GALACTIC 240 0 G240
+GALACTIC 245 0 G245
+GALACTIC 250 0 G250
+GALACTIC 255 0 G255
+GALACTIC 260 0 G260
+GALACTIC 265 0 G265
+GALACTIC 270 0 G270
+GALACTIC 275 0 G275
+GALACTIC 280 0 G280
+GALACTIC 285 0 G285
+GALACTIC 290 0 G290
+GALACTIC 295 0 G295
+GALACTIC 300 0 G300
+GALACTIC 305 0 G305
+GALACTIC 310 0 G310
+GALACTIC 315 0 G315
+GALACTIC 320 0 G320
+GALACTIC 325 0 G325
+GALACTIC 330 0 G330
+GALACTIC 335 0 G335
+GALACTIC 340 0 G340
+GALACTIC 345 0 G345
+GALACTIC 350 0 G350
+GALACTIC 355 0 G355
+
+AZEL 150 0 RUBBERDUCKY
+AZEL 45 50 TEST    /* TEST has AZ, EL, not galactic coordinates *
+		   /* allows tracking of an arbitrary "source" point *
+AZLIMITS 10.0 359.0
+ELLIMITS -1.0 90.0 
+*ALFASPID 1.0 1.0
+*CASSIMOUNT 14.25 16.5 2.0 110.0 30.0
+CASSIMOUNT
+PORT 1421           /* TCP socket port */
+*HOST localhost      /* host socket server is running on */
+HOST 18.109.0.104   /* host socket server is running on */
+CALCONS 1.0         /* gain correction constant to put power in units of K */
+BEAMWIDTH 5.0       /* 3 dB antenna full beamwidth in degrees */
+MANCAL -1           /* 0 or absence indicates automated cal vane */
+		    /* MANCAL -1 disables vane calibration */
+NOISECAL 115.0      /* initial value required for noise diode calibration */
+ROLLOFF 11          /* No. of gain roll-off channels */   
+MATCH 1             /* How measurements are joined together in mode 4 */  
+DIGITAL             /* sets digital receiver (default) */
+ROLLOFF 12          /* No. of "roll-off" channels at beginning & end of measurement */ 
+*ANALOG              /* required for old fashioned analog receiver */
+TOLERANCE 1         /* optional max error in counts */
+LOGERRS             /* LOGERRS [name] will write errors to a logging file */
+		    /* default name is srtelg.txt */
+*COUNTPERSTEP 50     /* optional stepped antenna motion */ 
+*RECORDFORM DAY      /* to start a new record file each day */
+VLSR                /* if you want VLSR in output */
+*ELBACKLASH 3.0      /* optional correction for elevation backlash */
+*FIELDSEP SPA        /* space field separator in output file, tab default */
+

@@ -13,9 +13,12 @@ numberOfSweeps = 8;
 sigXatMax = 10; %ms
 sigSweepRateCorrectionError = fitA.aerr; %s
 %mag field (x-axis)
-sigi = sqrt(0.1^2+0.1^2); %0.1 mA from precision, 0.1 mA from meter discrepancy
-sigRelCoilRadius = 0.25./[7.3 8.9 11.0]; %measurements in inches
-sigIEarth = [1.8 0.29 0.40]; %mA
+%sigi = sqrt(0.1^2+0.1^2); %0.1 mA from precision, 0.1 mA from meter discrepancy
+sigi = 0;
+%sigRelCoilRadius = 0.25./[7.3 8.9 11.0]; %measurements in inches
+sigRelCoilRadius = [0 0 0];
+%sigIEarth = [1.8 0.29 0.40]; %mA
+sigIEarth = [0 0 0];
 
 tableB(:,10) =sqrt(sigInstrumentPrecision^2 + sigStatPeak1^2/numberOfSweeps +...
     sigXatMax^2 + (sigSweepRateCorrectionError.*(tableB(:,8)-tableB(:,7))./tableB(:,9)).^2)...

@@ -53,14 +53,16 @@ function data = radFileParser(fileName, dateStr)
         data(index).stepFreq = str2double(textdata{i,9});
         data(index).mode = str2double(textdata{i,10});
         data(index).numPoints = str2double(textdata{i,11});
-
+        
         data(index).counts = zeros(data(index).numPoints,1);
         data(index).freq = zeros(data(index).numPoints,1);
-
+        
         for n = 1:data(index).numPoints
             data(index).counts(n) = str2double(textdata{i,11+n});
             data(index).freq(n) = data(index).startFreq + data(index).stepFreq * (n-1);
         end
+        
+        data(index).sum = sum(data(index).counts);
         
         %data(index).counts = data(index).counts(11:end-11);
         %data(index).freq = data(index).freq(11:end-11);

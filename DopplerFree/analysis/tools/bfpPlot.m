@@ -1,4 +1,6 @@
-function bananas = bfpPlot(data)
+function bananas = bfpPlot(data,index)
+
+data=data{index}
 
 subplot(2,1,1)
 plot(data.time,data.bal,'.')

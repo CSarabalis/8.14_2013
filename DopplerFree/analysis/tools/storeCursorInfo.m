@@ -11,7 +11,6 @@ data{index}.peakPositions = [data{index}.peakPositions; cursor_info(i).Position]
 data{index}.peakIndices = [data{index}.peakIndices; cursor_info(i).DataIndex];
 end
 
-
 % if varargin{1} == 'save'
 %     save('da.mat', 'da','data','data_indices','home')
 % else

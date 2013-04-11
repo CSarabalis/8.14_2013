@@ -24,6 +24,37 @@ end
 
 clear i x Y
 
+%% get peak freq diffs
+
+% fp vals
+i=42;
+
+fp = da{i}.fp(da{i}.peakIndices);
+
+amp = 0.0111; % sin amplitude
+offset = -0.308; % sin offset
+
+m=da{i}.peakOrder;
+shifts = asin((fp-offset)./amp);
+
+% convert arcsin into freq diffs
+
+shifts = (-1).^(m+1).*shifts+(m+1/2)*pi; % convert arcsin into phase diffs
+shifts = sort(shifts/(2*pi)); % convert phase diffs to wavenumbers and sort
+shifts = shifts-shifts(1); % normalize to first peak
+
+L = 0.4655;  % length of FP
+uncert_L = 0.005;  % uncert in length of FP
+c = 2.998*10^8;  % speed of light
+n_air = 1.000277;  % refractive index of air
+fsr = c/(2*n_air*L); % calculate free spectral range of FP
+
+shifts = shifts*fsr/10^9;  % get frequencies in GHz
+shifts_diff = [0; diff(shifts)];  % get freq diffs in GHz
+
+clear i L uncert_L c n_air fsr m amp offset fp
+
+
 
 
 

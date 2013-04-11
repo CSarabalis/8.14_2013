@@ -7,15 +7,8 @@ plot(data{index}.time, data{index}.fp,'.')
 title(data{index}.name)
 [x y] = ginput;
 
-%data{index}.peakOrder=[];
-for i=1:max(size(x))
-    data{index}.peakPositions(:,1)
-    
-    % WRITE A FUNCTION THAT FIGURES OUT WHICH BIN (m) THE PEAK IS IN
-    
-    %da{index}.peakOrder=[da{index}.peakOrder
-end
+data{index}.peakOrder=mBin(data{index}.peakPositions(:,1),x);
 
-bananas = {x y n bin};
+bananas = data;
 
 end

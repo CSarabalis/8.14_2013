@@ -12,8 +12,14 @@ set(0,'DefaultTextInterpreter','Latex')
 set(0,'DefaultTextFontSize',12)
 
 
-%% load up all the data
+%% reload data
 
+if res=='n'
+    load('da.mat','da','data','data_indices','home')
+end
+
+%% load up all the data
+if res=='y'
 % taken from analyze.m (chris's analysis file)
 
 home = pwd;  %save current path in analysis
@@ -68,3 +74,4 @@ clear data_alcorn
 
 clear i data_change* data_end
 
+end

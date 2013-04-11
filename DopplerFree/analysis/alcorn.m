@@ -1,10 +1,10 @@
 %% Startup
-
+res='n'
 setup
 
 %% fabry-perot analysis
 
-for i=data_indices(71:end)
+for i=data_indices(68:end)
     x = da{i};
     L = max(size(x.time));
     Fs = (x.time(2)-x.time(1))^(-1);

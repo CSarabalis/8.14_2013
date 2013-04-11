@@ -1,6 +1,7 @@
 %% Startup
-res='n'
-setup
+%res='n'
+%setup
+clear res
 
 %% fabry-perot analysis
 
@@ -22,7 +23,9 @@ for i=data_indices(68:end)
     title(x.name)
 end
 
-clear i x Y
+clear i x Y NFFT Fs f L
+
+%% find peaks
 
 %% get peak freq diffs
 
@@ -30,12 +33,22 @@ clear i x Y
 i=42;
 
 fp = da{i}.fp(da{i}.peakIndices);
-
-amp = 0.0111; % sin amplitude
-offset = -0.308; % sin offset
-
 m=da{i}.peakOrder;
-shifts = asin((fp-offset)./amp);
+
+amp = abs(da{i}.sineY(m+1)-da{i}.sineY(m))/2;
+off = (da{i}.sineY(m+1)+da{i}.sineY(m))/2;
+
+args = (fp-off)./amp;
+for i=1:max(size(args))
+    if args(i) >= 1
+        args(i) = 1;
+    end
+    if args(i) <= -1
+        args(i) = -1;
+    end
+end
+
+shifts = asin(args);
 
 % convert arcsin into freq diffs
 
@@ -52,7 +65,7 @@ fsr = c/(2*n_air*L); % calculate free spectral range of FP
 shifts = shifts*fsr/10^9;  % get frequencies in GHz
 shifts_diff = [0; diff(shifts)];  % get freq diffs in GHz
 
-clear i L uncert_L c n_air fsr m amp offset fp
+clear i L uncert_L c n_air fsr m amp off fp
 
 
 

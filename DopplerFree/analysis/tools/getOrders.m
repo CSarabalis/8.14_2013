@@ -5,8 +5,10 @@ function bananas = getOrders(data, index)
 figure()
 plot(data{index}.time, data{index}.fp,'.')
 title(data{index}.name)
+
 [x y] = ginput;
 
+data{index}.sineY = y;
 data{index}.peakOrder=mBin(data{index}.peakPositions(:,1),x);
 
 bananas = data;

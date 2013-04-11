@@ -19,11 +19,16 @@ end
 
 %% Summed Data
 
-sumData=da{42};  % init
-sumData.name = 'sumData (indices 42:55)';
+sta=23;
+fin=30;
+%i=42;
+%j=55;
 
-for i = 43:55
-  if da{i}.time(1) == da{42}.time(1)
+sumData=da{sta};% init
+sumData.name = ['sumData (indices ' num2str(sta) ':' num2str(fin) ')'];
+
+for i = (sta+1):fin
+  if da{i}.time(1) == da{sta}.time(1)
     sumData.up = sumData.up + da{i}.up;
     sumData.bal = sumData.bal + da{i}.bal;
     sumData.fp = sumData.fp + da{i}.fp;
@@ -31,16 +36,19 @@ for i = 43:55
   end
 end
 
-sumData.up=sumData.up/14;
-sumData.bal=sumData.bal/14;
-sumData.fp=sumData.fp/14;
-sumData.p=sumData.p/14;
+len = fin-sta+1;
+
+sumData.up=sumData.up/len;
+sumData.bal=sumData.bal/len;
+sumData.fp=sumData.fp/len;
+sumData.p=sumData.p/len;
 
 figure()
-bfpPlot(sumData)
+sumData={sumData};
+bfpPlot(sumData,1)
 
 figure()
-bfpPlot(da{42})
+bfpPlot(da,sta)
 
 
 %% Peak Splittings for 68,69

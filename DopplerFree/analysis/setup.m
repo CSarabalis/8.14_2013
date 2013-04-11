@@ -67,7 +67,9 @@ for i=[data_change_1:data_change_2-1 data_change_3:data_end]
     data_alcorn{i}.p = data{i}.data(:,5); % pumped beam PD output
 end
 
-data_indices = [1:data_change_2-1 data_change_3:data_end];
+sc_indices = [1:data_change_1-1];
+bal_indices = [data_change_1:data_change_2-1 data_change_3:data_end];
+sc_test_indices = [data_change_2:data_change_3-1];
 
 da = data_alcorn;
 clear data_alcorn

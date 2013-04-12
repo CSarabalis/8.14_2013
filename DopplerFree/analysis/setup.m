@@ -15,7 +15,7 @@ set(0,'DefaultTextFontSize',12)
 %% reload data
 
 if res=='n'
-    load('da.mat','da','data','data_indices','home')
+    load('da.mat','da','data','bal_indices','home','sc_indices','sc_test_indices')
 end
 
 %% load up all the data

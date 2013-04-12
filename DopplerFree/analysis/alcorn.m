@@ -1,14 +1,20 @@
 %% Startup
-res='y'
+res='n'
 setup
 clear res
 
 %% indexImport new data
 
-new_range = 83:84;
+% new_range = 79:87;
+% 
+% for i=new_range
+%     da{i} = indexImport(i);
+% end
+
+new_range = 88:91;
 
 for i=new_range
-    da{i} = indexImport(i);
+    da{i} = indexImport2(i);
 end
 
 clear i new_range
@@ -16,7 +22,7 @@ clear i new_range
 
 %% input peak and FP data from raw
 
-i=84;
+i=90;
 
 % first plot up some data
 figure()

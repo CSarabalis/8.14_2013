@@ -18,7 +18,7 @@ shifts_x = shifts;
 % shifts_x = grad*shifts + x(1);
 
 for i=1:max(size(shifts_x))
-    line([shifts_x(i) shifts_x(i)],[minY maxY])
+    line([shifts_x(i) shifts_x(i)],[minY maxY],'Color','r')
     text(shifts_x(i), maxY, num2str(data{index}.shiftsDiff(i)))
 end
 

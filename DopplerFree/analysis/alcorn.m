@@ -179,6 +179,36 @@ peak3.Cp = pvals(7:8);
 peak4.Ap = pvals(9:11);
 peak4.Bp = pvals(12:13);
 
+Ap = peak1.Ap(3)*peak2.Cp(1)*peak3.Cp(1)*peak4.Ap(1)*peak4.Ap(2)
+
+Bp = peak1.Bp(1)*peak1.Bp(2)*peak2.Cp(1)*peak3.Cp(1)
+
+
+%% calculate A + B
+
+% Rb87
+A87 = [];
+B87 = [];
+% 3-2, 2-1
+dum = inv([[getCoeffs(3,87)]; [getCoeffs(2,87)]])*10^3*[peak4.A(1); peak4.A(2)];
+A87 = [A87; dum(1)];
+B87 = [B87; dum(2)];
+% calculate errors for A and B later
+% 2-1, 1-0
+dum = inv([[getCoeffs(2,87)]; [getCoeffs(1,87)]])*10^3*[peak4.A(2); peak1.A(3)];
+A87 = [A87; dum(1)];
+B87 = [B87; dum(2)];
+% 3-2, 1-0
+dum = inv([[getCoeffs(3,87)]; [getCoeffs(1,87)]])*10^3*[peak4.A(1); peak1.A(3)];
+A87 = [A87; dum(1)];
+B87 = [B87; dum(2)];
+
+% Rb85
+% 3-2, 2-1
+dum = inv([[getCoeffs(3,85)]; [getCoeffs(2,85)]])*10^3*[peak3.C(1); peak2.C(1)];
+A85 = dum(1);
+B85 = dum(2);
+
 
 %% look at raw data
 

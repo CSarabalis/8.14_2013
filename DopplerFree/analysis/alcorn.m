@@ -1,28 +1,22 @@
 %% Startup
-res='n'
+res='y'
 setup
 clear res
 
-%% look at raw data
+%% indexImport new data
 
-% bal_indices are the indices of all the datasets with .bal data
-% sc_indices are the indices of all the datasets with .sc data
-% sc_test_indices are 71:72, a test of FP drift
+new_range = 83:84;
 
-%indices = 42:55;
-indices = bal_indices;
-
-for i=indices
-    figure()
-    bfpPlot(da,i)
+for i=new_range
+    da{i} = indexImport(i);
 end
 
-clear i indices
+clear i new_range
 
 
 %% input peak and FP data from raw
 
-i=22;
+i=84;
 
 % first plot up some data
 figure()
@@ -51,12 +45,34 @@ end
 
 clear i saveQ
 
+
+%% look at raw data
+
+% bal_indices are the indices of all the datasets with .bal data
+% sc_indices are the indices of all the datasets with .sc data
+% sc_test_indices are 71:72, a test of FP drift
+
+%indices = 42:55;
+indices = bal_indices;
+
+for i=indices
+    figure()
+    bfpPlot(da,i)
+end
+
+clear i indices
+
 %% fabry-perot ffts
 
-for i=[sc_indices sc_test_indices bal_indices]
+dummy = [];
+
+for i=79:84
     figure()
-    fftPlot(da,i)
+    dummy = [dummy fftPlot(da,i)];
 end
+
+
+
 
 clear i
 
@@ -105,7 +121,6 @@ transFreqs85 = [1*(fu(3)-fu(1)); fu(4)-fu(3); fu(5)-fu(4)];
 scaleFactor = transFreqs85./Rb85.freqs;
 scaled_transFreqs85 = transFreqs85/mean(scaleFactor);
 
-scaleFactor
 {'Meas (scaled) [MHz]' 'Expect [MHz]'}
 [scaled_transFreqs85*1000 Rb85.freqs*1000] % in MHz
 

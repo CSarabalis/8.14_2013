@@ -14,5 +14,7 @@ function bananas = fftPlot(data,index)
     %xlabel('Frequency [Hz]')
     %ylabel('FT of voltage')
     title(x.name)
+    
+    bananas = Y*L;
 
 end

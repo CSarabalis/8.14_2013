@@ -7,9 +7,10 @@ maxY = max(data{index}.bal);
 minY = min(data{index}.bal);
 
 shifts = data{index}.shifts;
+shifts = sort(shifts,1,'descend');
 
-shifts_length = shifts(end)-shifts(1);
-x_length = x(end)-x(1);
+shifts_length = abs(shifts(end)-shifts(1));
+x_length = abs(x(end)-x(1));
 grad = x_length/shifts_length;
 
 shifts_x = grad*shifts + x(1);

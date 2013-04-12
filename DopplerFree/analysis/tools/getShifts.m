@@ -3,10 +3,11 @@ function bananas = getShifts(data,index)
 % fp vals
 i=index;
 fp = data{i}.fp(data{i}.peakIndices);
-m=data{i}.peakOrder+1;
 
+m=data{i}.peakOrder+1;
 amp = abs(data{i}.sineY(m+1)-data{i}.sineY(m))/2;
 off = (data{i}.sineY(m+1)+data{i}.sineY(m))/2;
+m=m-1;
 
 %scale values greater than +-1 to +-1 so that asin doesnt give imaginary
 %results
@@ -23,7 +24,6 @@ end
 shifts = asin(args);
 
 % convert arcsin into freq diffs
-m=m-1;
 shifts = (-1).^(m+1).*shifts+(m+1/2)*pi; % convert arcsin into phase diffs
 shifts = sort(shifts/(2*pi)); % convert phase diffs to wavenumbers and sort
 shifts = shifts-shifts(1); % normalize to first peak

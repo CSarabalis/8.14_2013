@@ -19,7 +19,7 @@ shifts_x = shifts;
 
 for i=1:max(size(shifts_x))
     line([shifts_x(i) shifts_x(i)],[minY maxY],'Color','r')
-    text(shifts_x(i), maxY, num2str(data{index}.shiftsDiff(i)))
+    text(shifts_x(i), maxY, [num2str(10^3*data{index}.shiftsDiff(i),4) 'MHz'])
 end
 
 

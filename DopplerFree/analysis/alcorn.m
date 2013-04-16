@@ -180,8 +180,11 @@ peak4.Ap = pvals(9:11);
 peak4.Bp = pvals(12:13);
 
 Ap = peak1.Ap(3)*peak2.Cp(1)*peak3.Cp(1)*peak4.Ap(1)*peak4.Ap(2)
+Ap_given_23 = peak1.Ap(3)*peak4.Ap(1)*peak4.Ap(2)
 
 Bp = peak1.Bp(1)*peak1.Bp(2)*peak2.Cp(1)*peak3.Cp(1)
+Bp_given_23 = peak1.Bp(1)*peak1.Bp(2)
+
 
 
 %% calculate A + B

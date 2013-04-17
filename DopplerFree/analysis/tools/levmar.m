@@ -25,7 +25,7 @@ function [a,aerr,chisq,yfit,corr] = levmar(x,y,sig,fitfun,a0,dYda,sgn)
 %*** Parameters you may need to modify ***
 %*****************************************
 stepsize  = abs(a0)*0.001;              % when calculating the derivative of chi square
-chicut = 0.01;                          % Stop when successive chi^2 values differ by only 'chicut'
+chicut = 0.001;                          % Stop when successive chi^2 values differ by only 'chicut'
 a = a0;
 chi2 = calcchi2(x,y,sig,fitfun,a);      % Algorithm STEP 1
 lambda = 0.001;                         % Algorithm STEP 2
@@ -99,7 +99,7 @@ function deltaa = calcdeltaa(x,y,sig,fitfun,a,stepsize,lambda,dYda,sgn)
 % coeffieients between the best fit paratmeter estimates.
 % See Bevington p. 159 eq.(8.37) and Page 293, Program 8.6
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function corr = calcinvalpha(x,y,sig,fitfun,a,stepsize,lambda,dYda,sgn);
+function corr = calcinvalpha(x,y,sig,fitfun,a,stepsize,lambda,dYda,sgn)
     [dum,nparm] = size(a);
     [ndata,dum] = size(x);
     alpha = zeros(nparm,nparm);
@@ -111,7 +111,7 @@ function corr = calcinvalpha(x,y,sig,fitfun,a,stepsize,lambda,dYda,sgn);
             end
         end
     end
-
+    
     for j=1:nparm       % As in Equation 8.39, scale the diagonal elements of alpha to
                         % control the interpolation of the algorithms
                         % between the two extremes.
@@ -145,3 +145,4 @@ else   % if sgn=1, use the analytic expressions for derivatives
        end
    end
 end
+

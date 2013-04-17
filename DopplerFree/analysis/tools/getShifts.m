@@ -1,4 +1,4 @@
-function bananas = getShifts(data,index)
+function bananas = getShifts(data,index,varargin)
 
 % fp vals
 i=index;
@@ -28,8 +28,13 @@ shifts = (-1).^(m+1).*shifts+(m+1/2)*pi; % convert arcsin into phase diffs
 shifts = sort(shifts/(2*pi)); % convert phase diffs to wavenumbers and sort
 shifts = shifts-shifts(1); % normalize to first peak
 
+
 L = 0.4655;  % length of FP
 uncert_L = 0.005;  % uncert in length of FP
+if max(size(varargin)) > 0
+    L = varargin{1};
+    
+
 c = 2.998*10^8;  % speed of light
 n_air = 1.000277;  % refractive index of air
 fsr = c/(2*n_air*L); % calculate free spectral range of FP. FSR = 321.9 MHz

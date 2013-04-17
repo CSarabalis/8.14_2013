@@ -308,6 +308,13 @@ model = @(x,a)lorentzian(x,[a( 1) a( 2) a( 3)],[0.012106214141345   0.0332575989
 obj.model = model;
 fit{1} = obj;
 
+%get splittings
+T = 4e-5; %time between samples
+x = [3.325760e-02,7.901080e-02,1.056946e-01,1.235306e-01,1.504170e-01,1.760000e-01]; %scalings from model
+for i = 1:length(x)
+  obj.shifts(i) = (x(i)*obj.afit(3*i-1)-x(1)*obj.afit(3*1-1));  %splittings in seconds
+end
+obj.shifts = obj.shifts/T;
  %% Lorentzians: Cluster 2
  
 obj=struct;
@@ -326,6 +333,15 @@ model = @(x,a) lorentzian(x,[a( 1),a( 2),a( 3)],[0.008    0.0730    0.0040]) ...
 obj.model = model;
 cluster{2} = obj;
 
+%get splittings
+T = 4e-5; %time between samples
+x = [7.300000e-02,8.240000e-02,9.200000e-02,1.025000e-01,1.105000e-01]; %scalings from model
+for i = 1:length(x)
+  obj.shifts(i) = (x(i)*obj.afit(3*i-1)-x(1)*obj.afit(3*1-1));  %splittings in seconds
+end
+obj.shifts = obj.shifts/T; %splittings in indices
+
+clear x T
 %% Lorentzians Cluster 3
 
 obj=struct;
@@ -344,6 +360,15 @@ model = @(x,a)lorentzian(x,[a( 1),a( 2),a( 3)],[0.005715429224014   0.0757543090
   model,ones(1,18),0,0);
 obj.model = model;
 
+%get splittings
+T = 8e-5; %time between samples
+x = [7.575431e-02,1.082354e-01,1.114340e-01,1.289385e-01,1.286585e-01]; %scalings from model
+for i = 1:length(x)
+  obj.shifts(i) = (x(i)*obj.afit(3*i-1)-x(1)*obj.afit(3*1-1));  %splittings in seconds
+end
+obj.shifts = sort(obj.shifts/T); %sorted splittings in indices
+
+clear x T
 
 %% Lorentzians Cluster 4
 
@@ -360,3 +385,13 @@ model = @(x,a)lorentzian(x,[a(1),a(2),a(3)],[0.0276    0.0869    0.0010])+...
 [obj.afit,obj.aerr,obj.chisq,obj.yfit,obj.corr]=levmar(da{86}.time(t),da{86}.bal(t),0.001*ones(length(t),1),...
   model,ones(1,22),0,0);
 obj.model = model;
+
+%get splittings
+T = 4e-5; %time between samples
+x = [8.690000e-02,1.107000e-01,1.246000e-01,1.338000e-01,1.478000e-01,1.623000e-01]; %scalings from model
+for i = 1:length(x)
+  obj.shifts(i) = (x(i)*obj.afit(3*i-1)-x(1)*obj.afit(3*1-1));  %splittings in seconds
+end
+obj.shifts = obj.shifts/T;
+
+clear x T

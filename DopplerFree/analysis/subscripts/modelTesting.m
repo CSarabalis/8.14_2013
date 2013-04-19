@@ -44,17 +44,40 @@ peak4.Bu = [peak4.uncerts(1)^2+peak4.uncerts(2)^2;
 
 
 % peak 2 models
-peak2.C = peak2.shiftsDiff(4);
-peak2.exp = [29.3]*10^-3;
-peak2.Cu = [peak2.uncerts(3)^2+peak2.uncerts(2)^2].^0.5;
+peak2.C = [peak2.shiftsDiff(2)+peak2.shiftsDiff(3);
+    peak2.shiftsDiff(4)];
+peak2.exp = [63.4; 29.3]*10^-3;
+peak2.Cu = [peak2.uncerts(1)^2+peak2.uncerts(2)^2+peak2.uncerts(3)^2;
+    peak2.uncerts(3)^2+peak2.uncerts(4)^2].^0.5;
 
 
 % peak 3 models
-peak3.C = peak3.shiftsDiff([2 3]);
+peak3.C = [peak3.shiftsDiff(2)+peak3.shiftsDiff(3);
+    peak3.shiftsDiff(4)];
 peak3.exp = [63.4; 29.3]*10^-3;
-peak3.Cu = [peak3.uncerts(2)^2+peak3.uncerts(1)^2;
-    peak3.uncerts(2)^2+peak3.uncerts(3)^2].^0.5;
-    
+peak3.Cu = [peak3.uncerts(1)^2+peak3.uncerts(2)^2+peak3.uncerts(3)^2;
+    peak3.uncerts(3)^2+peak3.uncerts(4)^2].^0.5;
+
+
+for j=1:6
+% % peak 2 models
+% peak2.C = [peak2.shiftsDiff(2)+peak2.shiftsDiff(3);
+%     peak2.shiftsDiff(4);
+%     peak2.shiftsDiff(5)];
+% peak2.exp = [121.0; 63.4; 29.3]*10^-3;
+% peak2.Cu = [peak2.uncerts(1)^2+peak2.uncerts(2)^2+peak2.uncerts(3)^2;
+%     peak2.uncerts(3)^2+peak2.uncerts(4)^2;
+%     peak2.uncerts(4)^2+peak2.uncerts(5)^2].^0.5;
+% % peak 3 models
+% peak3.C = [peak3.shiftsDiff(2)+peak3.shiftsDiff(3);
+%     peak3.shiftsDiff(4);
+%     peak3.shiftsDiff(5)];
+% peak3.exp = [121.0; 63.4; 29.3]*10^-3;
+% peak3.Cu = [peak3.uncerts(1)^2+peak3.uncerts(2)^2+peak3.uncerts(3)^2;
+%     peak3.uncerts(3)^2+peak3.uncerts(4)^2;
+%     peak3.uncerts(4)^2+peak3.uncerts(5)^2].^0.5;
+end 
+clear j
 
 
 % evaluate p-values
@@ -78,22 +101,22 @@ end
 % designation of output
 peak1.Apvals = pvals(1:3);
 peak1.Bpvals = pvals(4:5);
-peak2.Cpvals = pvals(6);
-peak3.Cpvals = pvals(7:8);
-peak4.Apvals = pvals(9:11);
-peak4.Bpvals = pvals(12:13);
-peak1.Axoverpvals = pvals(14:15);
-peak4.Axoverpvals = pvals(16:17);
+peak2.Cpvals = pvals(6:7);
+peak3.Cpvals = pvals(8:9);
+peak4.Apvals = pvals(10:12);
+peak4.Bpvals = pvals(13:14);
+peak1.Axoverpvals = pvals(15:16);
+peak4.Axoverpvals = pvals(17:18);
 
 % prob of getting better result for each peak cluster
 peak1.ApvalsInner = pvalsInner(1:3);
 peak1.BpvalsInner = pvalsInner(4:5);
-peak2.CpvalsInner = pvalsInner(6);
-peak3.CpvalsInner = pvalsInner(7:8);
-peak4.ApvalsInner = pvalsInner(9:11);
-peak4.BpvalsInner = pvalsInner(12:13);
-peak1.AxoverpvalsInner = pvalsInner(14:15);
-peak4.AxoverpvalsInner = pvalsInner(16:17);
+peak2.CpvalsInner = pvalsInner(6:7);
+peak3.CpvalsInner = pvalsInner(8:9);
+peak4.ApvalsInner = pvalsInner(10:12);
+peak4.BpvalsInner = pvalsInner(13:14);
+peak1.AxoverpvalsInner = pvalsInner(15:16);
+peak4.AxoverpvalsInner = pvalsInner(17:18);
 
 % prob of getting worse result for each cluster
 peak1.Ap = 1-prod(peak1.ApvalsInner);

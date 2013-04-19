@@ -1,6 +1,6 @@
 % setups up path so that all the functions needed in analysing can be
 % called without having to cd(..) in and out,
-addpath('./tools','./subscripts','./')
+addpath('./tools','./subscripts','../data','./')
 
 %make latex the default text string interpreter
 set(0,'DefaultTextInterpreter','Latex')

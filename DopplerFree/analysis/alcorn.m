@@ -35,6 +35,9 @@ bfpPlot(da,i)
 % then run storeCursorInfo
 da = storeCursorInfo(da,i,cursor_info);
 
+% need to go through and get 3 peaks from files 42:55 to estimate stat var
+% in peak location
+
 % then select the maxs and mins of the FP output. Start with the first FP max to
 % the left of the first BAL peak. This is for the asin step.
 da = getOrders(da,i);
@@ -53,76 +56,83 @@ end
 
 clear i saveQ
 
-%% decide which peaks are which
+%% decide which peaks are which, model testing, calculate A+B
 
-FP_len = 0.3216; %GHz
-peakDecide % needs to be replaced with peakDecideLorentzian which uses the data from Chris's lorentzian fits
+FP_len = 0.4655; %metres +-0.005/sqrt(2)
+peakDecideLorentz % needs to be replaced with peakDecideLorentzian which uses the data from Chris's lorentzian fits
 clear FP_len
 
-%% model testing
 
 modelTesting % in subscripts
 
 
+%cc for peak 1
+bananas = CC87(peak1);
+peak1.A87 = bananas{1};
+peak1.B87 = bananas{2};
 
-%% calculate A + B
+%cc for peak 4
+bananas = CC87(peak4);
+peak4.A87 = bananas{1};
+peak4.B87 = bananas{2};
 
-% calculated using ACEF model from combination of peaks 1 + 4. I.E. kind of
-% bullshit
+A87 = mean([abs(peak1.A87); abs(peak4.A87)]);
+B87 = mean([abs(peak1.B87); abs(peak4.B87)]);
 
-% Rb87
-A87 = [];
-B87 = [];
-% 3-2, 2-1
-dum = inv([[getCoeffs(3,87)]; [getCoeffs(2,87)]])*10^3*[peak4.A(1); peak4.A(2)];
-A87 = [A87; dum(1)];
-B87 = [B87; dum(2)];
-% 2-1, 1-0
-dum = inv([[getCoeffs(2,87)]; [getCoeffs(1,87)]])*10^3*[peak4.A(2); peak1.A(3)];
-A87 = [A87; dum(1)];
-B87 = [B87; dum(2)];
-% 3-2, 1-0
-dum = inv([[getCoeffs(3,87)]; [getCoeffs(1,87)]])*10^3*[peak4.A(1); peak1.A(3)];
-A87 = [A87; dum(1)];
-B87 = [B87; dum(2)];
+%cc for peak 2
+bananas = CC85(peak2);
+peak2.A85 = bananas{1};
+peak2.B85 = bananas{2};
 
-% Rb87 error propagation
-A87u = [];
-B87u = [];
-% 3-2, 2-1
-dum = inv([[getCoeffs(3,87)]; [getCoeffs(2,87)]])*10^3*[peak4.Au(1); peak4.Au(2)];
-A87u = [A87u; dum(1)];
-B87u = [B87u; dum(2)];
-% 2-1, 1-0
-dum = inv([[getCoeffs(2,87)]; [getCoeffs(1,87)]])*10^3*[peak4.Au(2); peak1.Au(3)];
-A87u = [A87u; dum(1)];
-B87u = [B87u; dum(2)];
-% 3-2, 1-0
-dum = inv([[getCoeffs(3,87)]; [getCoeffs(1,87)]])*10^3*[peak4.Au(1); peak1.Au(3)];
-A87u = [A87u; dum(1)];
-B87u = [B87u; dum(2)];
+%cc for peak 3
+bananas = CC85(peak3);
+peak3.A85 = bananas{1};
+peak3.B85 = bananas{2};
 
-A87 = [A87 abs(A87u)];
-B87 = [B87 abs(B87u)];
+A85 = mean([abs(peak2.A85); abs(peak3.A85)]);
+B85 = mean([abs(peak2.B85); abs(peak3.B85)]);
+
+clear bananas
 
 
-% Rb85
-% 3-2, 2-1
-dum = inv([[getCoeffs(3,85)]; [getCoeffs(2,85)]])*10^3*[peak3.C(1); peak2.C(1)];
-A85 = dum(1);
-B85 = dum(2);
 
-% Rb85 error propagation
-% 3-2, 2-1
-dum = inv([[getCoeffs(3,85)]; [getCoeffs(2,85)]])*10^3*[peak3.Cu(1); peak2.Cu(1)];
-A85u = dum(1);
-B85u = dum(2);
+%% stat error testing
+i=55;
 
-A85 = [A85 abs(A85u)];
-B85 = [B85 abs(B85u)];
+figure()
+bfpPlot(da,i)
+%%
+statTest = storeCursorInfo(statTest,i-41,cursor_info);
 
-clear dum
+%% 
+peakLocs = [];
+for i=1:14
+    peakLocs = [peakLocs statTest{i}.peakPositions(:,1)];
+end
 
+mean(peakLocs,2)
+std(peakLocs,0,2)
+mean(std(peakLocs,0,2))
+
+%% stat error testing rnd 2
+i=55;
+
+figure()
+bfpPlot(da,i)
+subplot(2,1,1)
+axis([0.65 0.83 -0.28 -0.12])
+
+%%
+
+statTestSingle = storeCursorInfo(statTestSingle,i-41,cursor_info);
+%% 
+peakLocs = [];
+for i=1:14
+    peakLocs = [peakLocs statTestSingle{i}.peakPositions(:,1)];
+end
+
+mean(peakLocs,2)
+std(peakLocs,0,2)
 
 
 %% vary FP length and compute pvals for each model
@@ -131,12 +141,7 @@ modelPs = [];
 
 for FP_len = [0:1:500]*10^-3;
 
-dummy_da = da;
-for j = [79 82 84 86];
-    dummy_da = getShifts(dummy_da,j,FP_len);
-end
-
-peakDecide;
+peakDecideLorentz;
 modelTesting;
 
 modelPs = [modelPs; FP_len peak1.Ap peak1.Bp peak2.Cp peak3.Cp peak4.Ap peak4.Bp];
@@ -215,7 +220,7 @@ fit{1} = obj;
 
 %get splittings
 T = 4e-5; %time between samples
-x = [3.325760e-02,7.901080e-02,1.056946e-01,1.235306e-01,1.504170e-01,1.760000e-01]; %scalings from model
+x = [3.325760e-02,7.901080e-02,1.056946e-01,1.235306e-01,1.504170e-01,1.760000e-01]; %scalings from model %GUESSES
 for i = 1:length(x)
   obj.shifts(i) = (x(i)*obj.afit(3*i-1)-x(1)*obj.afit(3*1-1));  %splittings in seconds
 end

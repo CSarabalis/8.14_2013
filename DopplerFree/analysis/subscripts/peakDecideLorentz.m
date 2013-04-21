@@ -2,7 +2,7 @@ c = 2.998*10^8;  % speed of light
 n_air = 1.000277;  % refractive index of air
 fsr = 10^-9*(c/(2*n_air*FP_len)); % calculate free spectral range of FP. FSR = 321.9 MHz
 
-statFluc = 0.27e-3;
+%statFluc = 0.27e-3;
 statFluc = 4.27e-3;
 
 i=1;

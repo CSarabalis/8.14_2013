@@ -1,7 +1,7 @@
 % guess 1
 model = @(x,a) a(1)*x.^2 + a(2)*x + a(3);
 
-i=4; 
+i=1; 
 a = cluster{i}.autocorr.fits{1}.a;
 peak = cluster{i}.autocorr.fits{1}.peak;
 covar = cluster{i}.autocorr.fits{1}.covar;
@@ -20,7 +20,7 @@ sqrt(s2)/peak
 %% plotting
 x = [-100:1:100];
 y = model(x,a);
-ACF = cluster{4}.autocorr.ACF;
+ACF = cluster{1}.autocorr.ACF;
 hold all
 plot(x+peak,y*10^-6+0.75)
 plot(ACF)

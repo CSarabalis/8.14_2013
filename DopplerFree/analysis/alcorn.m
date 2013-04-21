@@ -58,13 +58,20 @@ clear i saveQ
 
 %% decide which peaks are which, model testing, calculate A+B
 
-FP_len = 0.4655; %metres +-0.005/sqrt(2)
+%FP_len = 0.4655; %metres +-0.005/sqrt(2)
+FP_len = 0.561; %from calibration
+scaling = 1;
+
 peakDecideLorentz % needs to be replaced with peakDecideLorentzian which uses the data from Chris's lorentzian fits
-clear FP_len
 
+modelTesting2 % in subscripts
 
-modelTesting % in subscripts
+apples = bananas;
 
+apples = [...
+    mean([apples(1,1),apples(3,1)]) sqrt(apples(1,2)^2+apples(3,2)^2)/sqrt(2) apples(1,3) mean([apples(1,4),apples(3,4)]);
+    mean([apples(2,1),apples(4,1)]) sqrt(apples(2,2)^2+apples(4,2)^2)/sqrt(2) apples(2,3) mean([apples(2,4),apples(4,4)]);
+    apples(5:end,:)];
 
 %cc for peak 1
 bananas = CC87(peak1);
@@ -79,20 +86,38 @@ peak4.B87 = bananas{2};
 A87 = mean([abs(peak1.A87); abs(peak4.A87)]);
 B87 = mean([abs(peak1.B87); abs(peak4.B87)]);
 
-%cc for peak 2
-bananas = CC85(peak2);
-peak2.A85 = bananas{1};
-peak2.B85 = bananas{2};
+% %cc for peak 2
+% bananas = CC85(peak2);
+% peak2.A85 = bananas{1};
+% peak2.B85 = bananas{2};
 
 %cc for peak 3
 bananas = CC85(peak3);
 peak3.A85 = bananas{1};
 peak3.B85 = bananas{2};
 
-A85 = mean([abs(peak2.A85); abs(peak3.A85)]);
-B85 = mean([abs(peak2.B85); abs(peak3.B85)]);
+A85 = abs(peak3.A85);
+B85 = abs(peak3.B85);
 
-clear bananas
+A87mean = 84.72;
+B87mean = 12.50;
+A85mean = 25.00;
+B85mean = 25.69;
+
+A87pval = cdf('norm',A87(1),A87mean,A87(2));
+B87pval = cdf('norm',B87(1),B87mean,B87(2));
+A85pval = cdf('norm',A85(1),A85mean,A85(2));
+B85pval = cdf('norm',B85(1),B85mean,B85(2));
+
+apples = [apples;
+    A87 A87mean A87pval;
+    B87 B87mean B87pval;
+    A85 A85mean A85pval;
+    B85 B85mean B85pval];
+
+apples
+
+clear bananas FP_len scaling
 
 
 
@@ -133,6 +158,68 @@ end
 
 mean(peakLocs,2)
 std(peakLocs,0,2)
+
+%% vary scaling and compute pvals for each model
+
+modelPs = [];
+
+for scaling = [0.5:0.001:1.2];
+
+modelTesting2;
+
+modelPs = [modelPs; scaling peak1.ADFp peak1.ADFpxover peak3.ACEp peak4.ADFp peak4.ADFpxover ...
+    peak1.ADFpxover*peak3.ACEp*peak4.ADFpxover];
+
+end
+
+figure()
+hold all
+for j=2:7
+plot(modelPs(:,1), modelPs(:,j))
+end
+legend('Peak 1 ADF model','Peak 1 ADF model (xover)','Peak 3 ACE model','Peak 4 ADF model','Peak 4 ADF model (xover)','Prod')
+xlabel('Scaling','Interpreter','tex')
+ylabel('P-value [normed]','Interpreter','tex')
+title('Calibrating scaling')
+
+
+clear j scaling modelPs
+
+%% vary FP length and compute pvals with modelTesting2
+
+
+modelPs = [];
+scaling = 1;
+
+for FP_len = [450:1:650]*10^-3;
+
+peakDecideLorentz
+modelTesting2;
+
+c = 2.998*10^8;  % speed of light
+n_air = 1.000277;  % refractive index of air
+fsr = 10^-6*(c/(2*n_air*FP_len)); % calculate free spectral range of FP. FSR = 321.9 MHz
+
+pProd = peak1.ADFpxover*peak3.ACEp*peak4.ADFpxover;
+
+modelPs = [modelPs; fsr peak1.ADFp peak1.ADFpxover peak3.ACEp peak4.ADFp peak4.ADFpxover pProd];
+
+end
+
+modelPs(:,7) = modelPs(:,7)/max(modelPs(:,7));
+
+figure()
+hold all
+for j=2:7
+plot(modelPs(:,1), modelPs(:,j),'LineWidth',2.0)
+end
+legend('Peak 1 ADF model','Peak 1 ADF model (xover)','Peak 3 ACE model','Peak 4 ADF model','Peak 4 ADF model (xover)','Prod (normed to max)')
+xlabel('Free spectral range of Fabry-Perot [MHz]','Interpreter','tex')
+ylabel('P-value','Interpreter','tex')
+title('Re-scaling Fabry-Perot free spectral range')
+
+
+clear j scaling modelPs FP_len
 
 
 %% vary FP length and compute pvals for each model

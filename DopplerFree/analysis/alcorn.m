@@ -210,14 +210,14 @@ modelPs(:,7) = modelPs(:,7)/max(modelPs(:,7));
 
 figure()
 hold all
-for j=2:7
+for j=[3 4 6 7]
 plot(modelPs(:,1), modelPs(:,j),'LineWidth',2.0)
 end
-legend('Peak 1 ADF model','Peak 1 ADF model (xover)','Peak 3 ACE model','Peak 4 ADF model','Peak 4 ADF model (xover)','Prod (normed to max)')
+legend('Peak cluster 1','Peak cluster 3','Peak cluster 4','Total p-value (normed to maximum)')
 xlabel('Free spectral range of Fabry-Perot [MHz]','Interpreter','tex')
 ylabel('P-value','Interpreter','tex')
 title('Re-scaling Fabry-Perot free spectral range')
-
+axis([230 330 0 1])
 
 clear j scaling modelPs FP_len
 

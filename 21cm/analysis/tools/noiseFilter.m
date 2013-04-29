@@ -1,8 +1,15 @@
 function bananas = noiseFilter(data,index)
 
-y = fft(data(index).counts);
-y = y(1:100);
+span = 5;
+range = 9:141;
+filterRange = 1:40;
 
-bananas = ifft(y);
+y = fft(data(index).counts(range));
+y = y(filterRange);
+
+x = abs(ifft(y));
+x = smooth(x,span);
+
+bananas = x;
 
 end

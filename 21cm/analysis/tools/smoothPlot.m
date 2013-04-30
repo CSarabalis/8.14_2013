@@ -15,5 +15,4 @@ plotText = {['Time = ' a.timeText],['Az, El (+ Offset) = ' num2str(a.az) ', ' nu
 
 text(1420,60,plotText);
 
-
 end

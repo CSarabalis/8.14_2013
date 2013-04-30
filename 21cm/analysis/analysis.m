@@ -9,7 +9,11 @@ gal03apr=radFileParser('../data/galx150to210.rad','04-03-13');
 
 %longscans
 
-longscan1 = radFileParser('../data/410257.rad','04-08-13');
+longscan1 = radFileParser('../data/410257.rad','04-10-13');
+
+longscan2 = radFileParser('../data/410208.rad','04-10-13');
+
+longscan3 = radFileParser('../data/410340.rad','04-10-13');
 
 %% galaxy lat scans
 

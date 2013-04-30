@@ -1,5 +1,5 @@
-for i=1:73
+for i=70:73
 figure
-plot(noiseFilter(longscan1,i))
+plot(noiseFilter(longscan1,i),'.')
 end
 

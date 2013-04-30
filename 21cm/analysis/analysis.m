@@ -1,3 +1,5 @@
+%% Initialize Environment
+
 setup
 
 %radFileParser('../data/1309118.rad','04-01-13')

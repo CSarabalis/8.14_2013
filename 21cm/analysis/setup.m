@@ -7,7 +7,7 @@ set(0,'DefaultTextInterpreter','Latex')
 
 % make text defaults
 %set(0,'DefaultTextFontName','Mukti Narrow')
-set(0,'DefaultTextFontSize',12)
+set(0,'DefaultTextFontSize',16)
 
 % load up all the data
 %yet to be implemented

@@ -28,7 +28,7 @@ peakgroup=round(peakgroup);
 if smoothwidth>1,
     d=fastsmooth(deriv(y),smoothwidth,smoothtype);
 else
-    d=y;
+    d=y; % shouldn't this be deriv(y)?
 end
 n=round(peakgroup/2+1);
 P=[0 0 0 0 0];

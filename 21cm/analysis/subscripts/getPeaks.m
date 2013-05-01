@@ -7,7 +7,7 @@ peaks = cell(max(size(data)),1);
 
 for i=1:size(peaks,1)
     peaks{i} = data(i);
-    peaks{i}.vel = freq2vel(peaks{i}.freq); % convert freqs to vels
+    peaks{i}.vel = freq2vel(peaks{i}.freq) - peaks{i}.vlsr; % convert freqs to vels
 end
 
 clear i data
@@ -94,17 +94,17 @@ for i=1:max(size(avgPeaks))
 avgPeaks = storePeaks(avgPeaks,i);
 end
 
-for i=1:max(size(avgPeaks))
-figure()
-plot(avgPeaks{i}.vel, smooth3(avgPeaks{i}.counts,5),'.')
-title(['Glon = ' num2str(avgPeaks{i}.glon) ', n = ' num2str(avgPeaks{i}.n)],'FontSize',20)
-xlabel('Receding velocity [km/sec]','Interpreter','tex','FontSize',20)
-ylabel('Counts','Interpreter','tex','FontSize',20)
-line([avgPeaks{i}.vel(1) avgPeaks{i}.vel(end)],[0 0],'Color','r')
-for j=1:size(avgPeaks{i}.P,1)
-line([avgPeaks{i}.P(j,2) avgPeaks{i}.P(j,2)], [0 10], 'Color', 'g')
-end
-end
+% for i=1:max(size(avgPeaks))
+% figure()
+% plot(avgPeaks{i}.vel, smooth3(avgPeaks{i}.counts,5),'.')
+% title(['Glon = ' num2str(avgPeaks{i}.glon) ', n = ' num2str(avgPeaks{i}.n)],'FontSize',20)
+% xlabel('Receding velocity [km/sec]','Interpreter','tex','FontSize',20)
+% ylabel('Counts','Interpreter','tex','FontSize',20)
+% line([avgPeaks{i}.vel(1) avgPeaks{i}.vel(end)],[0 0],'Color','r')
+% for j=1:size(avgPeaks{i}.P,1)
+% line([avgPeaks{i}.P(j,2) avgPeaks{i}.P(j,2)], [0 10], 'Color', 'g')
+% end
+% end
 
 % %% get peaks mang
 % 
@@ -136,7 +136,7 @@ glonVsPeakVel = [glonVsPeakVel; avgPeaks{i}.glon avgPeaks{i}.P(j,2)];
 end
 end
 
-plot(glonVsPeakVel(:,1), glonVsPeakVel(:,2),'.')
+errorbar(glonVsPeakVel(:,1), glonVsPeakVel(:,2),glonVsPeakVel(:,2)*0+10,'.')
 title('Receding Velocity of major structures in power spectrum at various Glon','FontSize',20)
 xlabel('Glon [deg]','Interpreter','tex','FontSize',20)
 ylabel('Receding velocity [km/sec]','Interpreter','tex','FontSize',20)
@@ -148,29 +148,55 @@ clear i j
 % go through each file, put cursor on peak, get cursor info, store in peaks
 % then plot lon vs peak freq
 % woo!
-i=1; % maxi=21
+VmaxIndices = [];
 
-span = 5;
+for i=1:max(size(avgPeaks))
+if avgPeaks{i}.glon < 95
+
+%plot
 figure()
-plot(avgPeaks{i}.vel, smooth(avgPeaks{i}.counts,span),'.')
+plot(avgPeaks{i}.vel, smooth3(avgPeaks{i}.counts,5),'.')
 title(['Glon = ' num2str(avgPeaks{i}.glon) ', n = ' num2str(avgPeaks{i}.n)],'FontSize',20)
 xlabel('Receding velocity [km/sec]','Interpreter','tex','FontSize',20)
 ylabel('Counts','Interpreter','tex','FontSize',20)
 line([avgPeaks{i}.vel(1) avgPeaks{i}.vel(end)],[0 0],'Color','r')
+for j=1:size(avgPeaks{i}.P,1)
+line([avgPeaks{i}.P(j,2) avgPeaks{i}.P(j,2)], [0 10], 'Color', 'g')
+end
+%
 
+[x, y] = ginput(1);
 
-%%
-avgPeaks = VmaxstoreCursorInfo(avgPeaks,i,cursor_info);
+avgPeaks{i}.Vmax = x;
+
+VmaxIndices = [VmaxIndices i];
+
+end
+
+end
+
 
 %% rotation curve
 
-i=1;
+
 
 vSun = 220; %km/sec
 rSun = 8.5; %kiloparsecs (kpc)
+R = [];
+V = [];
+for i=VmaxIndices
+glonRad = avgPeaks{i}.glon/360*2*pi;
+r = rSun*sin(glonRad);
+v = avgPeaks{i}.Vmax + vSun*sin(glonRad);
+R=[R; r];
+V=[V; v];
+end
 
-r = rSun*sin(avgPeaks{i}.glon);
-v = avgPeaks{i}.VmaxPositions(1) + vSun*sin(avgPeaks{i}.glon);
+figure()
+errorbar(R,V,V*0+10,'.','MarkerSize',20)
+title('Rotation curve of the Milky Way','FontSize',20)
+xlabel('Radius from galactic center [kpc]','Interpreter','tex','FontSize',20)
+ylabel('Orbital velocity [km/sec]','Interpreter','tex','FontSize',20)
 
 
 

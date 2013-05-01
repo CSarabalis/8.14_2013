@@ -63,6 +63,8 @@ function data = radFileParser(fileName, dateStr)
         end
         
         data(index).sum = sum(data(index).counts);
+
+        data(index).vlsr = newData1.data(i-5);
         
         %data(index).counts = data(index).counts(11:end-11);
         %data(index).freq = data(index).freq(11:end-11);

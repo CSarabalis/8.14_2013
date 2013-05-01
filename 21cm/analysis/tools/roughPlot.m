@@ -1,6 +1,6 @@
 function bananas = roughPlot(data, index)
 
-a=data(index);
+a=data{index};
 
 plot(a.freq, a.counts,'.')
 

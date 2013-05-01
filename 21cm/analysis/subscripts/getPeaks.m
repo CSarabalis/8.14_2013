@@ -1,6 +1,7 @@
 %% init & get data
 
-data = [gal03apr longscan1 longscan2 longscan3];
+data = [longscan1 longscan2 longscan3 longscan4 longscan5 longscan6 longscan7,...
+ longscan8 longscan9];
 
 peaks = cell(max(size(data)),1);
 
@@ -45,18 +46,19 @@ clear i
 %% remove baseline
 
 for i=1:max(size(avgPeaks))
-avgPeaks = removeBaseline(avgPeaks,i);
+avgPeaks = removeBaseline(avgPeaks,i,1/2);
 end
 
-for i=1:max(size(avgPeaks))
-    figure()
-    plot(avgPeaks{i}.vel, avgPeaks{i}.counts,'.')
-    title(['Glon = ' num2str(avgPeaks{i}.glon) ', n = ' num2str(avgPeaks{i}.n)],'FontSize',20)
-    xlabel('Receding velocity [km/sec]','Interpreter','tex','FontSize',20)
-    ylabel('Counts','Interpreter','tex','FontSize',20)
-end
-
-clear i
+% for i=1:max(size(avgPeaks))
+%     figure()
+%     plot(avgPeaks{i}.vel, avgPeaks{i}.counts,'.')
+%     title(['Glon = ' num2str(avgPeaks{i}.glon) ', n = ' num2str(avgPeaks{i}.n)],'FontSize',20)
+%     xlabel('Receding velocity [km/sec]','Interpreter','tex','FontSize',20)
+%     ylabel('Counts','Interpreter','tex','FontSize',20)
+%     line([avgPeaks{i}.vel(1) avgPeaks{i}.vel(end)],[0 0],'Color','r')
+% end
+% 
+% clear i
 
 %% smoothing
 
@@ -64,31 +66,63 @@ span = 5;
 
 for i=1:max(size(avgPeaks))
     figure()
-    plot(avgPeaks{i}.vel, smooth(avgPeaks{i}.counts,span),'.')
+    plot(avgPeaks{i}.vel, smooth3(avgPeaks{i}.counts,span),'.')
     title(['Glon = ' num2str(avgPeaks{i}.glon) ', n = ' num2str(avgPeaks{i}.n)],'FontSize',20)
     xlabel('Receding velocity [km/sec]','Interpreter','tex','FontSize',20)
     ylabel('Counts','Interpreter','tex','FontSize',20)
+    line([avgPeaks{i}.vel(1) avgPeaks{i}.vel(end)],[0 0],'Color','r')
 end
 
 clear i span
 
+%% cut the nonsense (when counts is just NaN)
+killIndices = [];
+for i=1:max(size(avgPeaks))
+if size(avgPeaks{i}.counts,1)==1
+killIndices = [killIndices i];
+end
+end
 
-%% get peaks mang
+avgPeaks(killIndices) = [];
 
-% go through each file, put cursor on peak, get cursor info, store in peaks
-% then plot lon vs peak freq
-% woo!
-i=13; % maxi=21
+weirdSlopeyData = [36:47];
+avgPeaks(weirdSlopeyData) = [];
 
-span = 5;
+%% auto-get peaks mang
+
+for i=1:max(size(avgPeaks))
+avgPeaks = storePeaks(avgPeaks,i);
+end
+
+for i=1:max(size(avgPeaks))
 figure()
-plot(avgPeaks{i}.vel, smooth(avgPeaks{i}.counts,span),'.')
+plot(avgPeaks{i}.vel, smooth3(avgPeaks{i}.counts,5),'.')
 title(['Glon = ' num2str(avgPeaks{i}.glon) ', n = ' num2str(avgPeaks{i}.n)],'FontSize',20)
 xlabel('Receding velocity [km/sec]','Interpreter','tex','FontSize',20)
 ylabel('Counts','Interpreter','tex','FontSize',20)
+line([avgPeaks{i}.vel(1) avgPeaks{i}.vel(end)],[0 0],'Color','r')
+for j=1:size(avgPeaks{i}.P,1)
+line([avgPeaks{i}.P(j,2) avgPeaks{i}.P(j,2)], [0 10], 'Color', 'g')
+end
+end
 
-%%
-avgPeaks = storeCursorInfo(avgPeaks,i,cursor_info);
+% %% get peaks mang
+% 
+% % go through each file, put cursor on peak, get cursor info, store in peaks
+% % then plot lon vs peak freq
+% % woo!
+% i=13; % maxi=21
+% 
+% span = 5;
+% figure()
+% plot(avgPeaks{i}.vel, smooth(avgPeaks{i}.counts,span),'.')
+% title(['Glon = ' num2str(avgPeaks{i}.glon) ', n = ' num2str(avgPeaks{i}.n)],'FontSize',20)
+% xlabel('Receding velocity [km/sec]','Interpreter','tex','FontSize',20)
+% ylabel('Counts','Interpreter','tex','FontSize',20)
+% line([avgPeaks{i}.vel(1) avgPeaks{i}.vel(end)],[0 0],'Color','r')
+% 
+% %%
+% avgPeaks = storeCursorInfo(avgPeaks,i,cursor_info);
 
 
 
@@ -97,8 +131,8 @@ avgPeaks = storeCursorInfo(avgPeaks,i,cursor_info);
 glonVsPeakVel = [];
 
 for i=1:max(size(avgPeaks))
-for j=1:max(size(avgPeaks{i}.peakIndices))
-glonVsPeakVel = [glonVsPeakVel; avgPeaks{i}.glon avgPeaks{i}.peakPositions(j,1)];
+for j=1:size(avgPeaks{i}.P,1)
+glonVsPeakVel = [glonVsPeakVel; avgPeaks{i}.glon avgPeaks{i}.P(j,2)];
 end
 end
 
@@ -107,9 +141,39 @@ title('Receding Velocity of major structures in power spectrum at various Glon',
 xlabel('Glon [deg]','Interpreter','tex','FontSize',20)
 ylabel('Receding velocity [km/sec]','Interpreter','tex','FontSize',20)
 
-
-
 clear i j
+
+%% get Vmax's (manually cos you a sucka)
+
+% go through each file, put cursor on peak, get cursor info, store in peaks
+% then plot lon vs peak freq
+% woo!
+i=1; % maxi=21
+
+span = 5;
+figure()
+plot(avgPeaks{i}.vel, smooth(avgPeaks{i}.counts,span),'.')
+title(['Glon = ' num2str(avgPeaks{i}.glon) ', n = ' num2str(avgPeaks{i}.n)],'FontSize',20)
+xlabel('Receding velocity [km/sec]','Interpreter','tex','FontSize',20)
+ylabel('Counts','Interpreter','tex','FontSize',20)
+line([avgPeaks{i}.vel(1) avgPeaks{i}.vel(end)],[0 0],'Color','r')
+
+
+%%
+avgPeaks = VmaxstoreCursorInfo(avgPeaks,i,cursor_info);
+
+%% rotation curve
+
+i=1;
+
+vSun = 220; %km/sec
+rSun = 8.5; %kiloparsecs (kpc)
+
+r = rSun*sin(avgPeaks{i}.glon);
+v = avgPeaks{i}.VmaxPositions(1) + vSun*sin(avgPeaks{i}.glon);
+
+
+
 
 
 %% calculate v_receding from earth

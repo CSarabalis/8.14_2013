@@ -136,10 +136,12 @@ glonVsPeakVel = [glonVsPeakVel; avgPeaks{i}.glon avgPeaks{i}.P(j,2)];
 end
 end
 
-errorbar(glonVsPeakVel(:,1), glonVsPeakVel(:,2),glonVsPeakVel(:,2)*0+10,'.')
-title('Receding Velocity of major structures in power spectrum at various Glon','FontSize',20)
-xlabel('Glon [deg]','Interpreter','tex','FontSize',20)
+figure()
+errorbar(glonVsPeakVel(:,1), glonVsPeakVel(:,2),glonVsPeakVel(:,2)*0+1,'.')
+title('Receding Velocity of major peaks in power spectrum at various Glon','FontSize',20)
+xlabel('Galactic longitude [deg]','Interpreter','tex','FontSize',20)
 ylabel('Receding velocity [km/sec]','Interpreter','tex','FontSize',20)
+line([0 250],[0 0],'Color','r')
 
 clear i j
 
@@ -199,8 +201,40 @@ xlabel('Radius from galactic center [kpc]','Interpreter','tex','FontSize',20)
 ylabel('Orbital velocity [km/sec]','Interpreter','tex','FontSize',20)
 
 
+clear vSun rSun
 
 
+%% map spiral arms
+
+vSun = 220; %km/sec
+rSun = 8.5; %kiloparsecs (kpc)
+
+spirals = [];
+
+for i=1:max(size(avgPeaks))
+if avgPeaks{i}.glon > 95
+a = [67.76 50.06 -4.0448 0.0861]*0.868;
+glon = avgPeaks{i}.glon;
+for j = size(avgPeaks{i}.P,1)
+Vp = avgPeaks{i}.P(j,2);
+Tr = @(r) (a(1) + a(2)*r + a(3)*r.^2 + a(4)*r.^3)*(rSun*glon*(2*pi/360))/(Vp+vSun*glon*(2*pi/360))-r;
+R = fzero(Tr,9);
+spirals = [spirals; glon R];
+end
+end
+end
+%C = @(Vp, glon) (Vp+vSun*glon*(2*pi/360))/(rSun*glon*(2*pi/360));
+
+figure()
+errorbar(spirals(:,1),spirals(:,2),spirals(:,2)*0+0.2,'.')
+title('Spiral arms of the Milky Way','FontSize',20)
+xlabel('Galactic longitude','Interpreter','tex','FontSize',20)
+ylabel('Radius from galactic center [kpc]','Interpreter','tex','FontSize',20)
+
+
+
+
+clear vSun rSun
 
 %% calculate v_receding from earth
 

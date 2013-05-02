@@ -58,7 +58,7 @@ end
 %     line([avgPeaks{i}.vel(1) avgPeaks{i}.vel(end)],[0 0],'Color','r')
 % end
 % 
-% clear i
+clear i
 
 %% smoothing
 
@@ -93,7 +93,7 @@ avgPeaks(weirdSlopeyData) = [];
 for i=1:max(size(avgPeaks))
 avgPeaks = storePeaks(avgPeaks,i);
 end
-
+% 
 % for i=1:max(size(avgPeaks))
 % figure()
 % plot(avgPeaks{i}.vel, smooth3(avgPeaks{i}.counts,5),'.')
@@ -105,24 +105,6 @@ end
 % line([avgPeaks{i}.P(j,2) avgPeaks{i}.P(j,2)], [0 10], 'Color', 'g')
 % end
 % end
-
-% %% get peaks mang
-% 
-% % go through each file, put cursor on peak, get cursor info, store in peaks
-% % then plot lon vs peak freq
-% % woo!
-% i=13; % maxi=21
-% 
-% span = 5;
-% figure()
-% plot(avgPeaks{i}.vel, smooth(avgPeaks{i}.counts,span),'.')
-% title(['Glon = ' num2str(avgPeaks{i}.glon) ', n = ' num2str(avgPeaks{i}.n)],'FontSize',20)
-% xlabel('Receding velocity [km/sec]','Interpreter','tex','FontSize',20)
-% ylabel('Counts','Interpreter','tex','FontSize',20)
-% line([avgPeaks{i}.vel(1) avgPeaks{i}.vel(end)],[0 0],'Color','r')
-% 
-% %%
-% avgPeaks = storeCursorInfo(avgPeaks,i,cursor_info);
 
 
 
@@ -152,7 +134,7 @@ clear i j
 % woo!
 VmaxIndices = [];
 
-for i=1:max(size(avgPeaks))
+for i=26:28%1:max(size(avgPeaks))
 if avgPeaks{i}.glon < 95
 
 %plot
@@ -177,10 +159,17 @@ end
 
 end
 
+clear x y j i
+
 
 %% rotation curve
 
-
+% VmaxIndices=[];
+% for i=1:max(size(avgPeaks))
+% if avgPeaks{i}.glon < 95
+% VmaxIndices=[VmaxIndices i];
+% end
+% end
 
 vSun = 220; %km/sec
 rSun = 8.5; %kiloparsecs (kpc)
@@ -194,14 +183,20 @@ R=[R; r];
 V=[V; v];
 end
 
+a = [67.76 50.06 -4.0448 0.0861];
+Tr = @(r) (a(1) + a(2)*r + a(3)*r.^2 + a(4)*r.^3)
+
 figure()
 errorbar(R,V,V*0+10,'.','MarkerSize',20)
 title('Rotation curve of the Milky Way','FontSize',20)
 xlabel('Radius from galactic center [kpc]','Interpreter','tex','FontSize',20)
 ylabel('Orbital velocity [km/sec]','Interpreter','tex','FontSize',20)
+hold all
+r = [0:0.01:9];
+plot(r,Tr(r),'r')
 
 
-clear vSun rSun
+clear vSun rSun glonRad R V r v i
 
 
 %% map spiral arms
@@ -234,7 +229,11 @@ ylabel('Radius from galactic center [kpc]','Interpreter','tex','FontSize',20)
 
 
 
-clear vSun rSun
+clear vSun rSun i j a glon glonRad Tr Vp
+
+%% clearing
+ 
+clear peaks spirals glonVsPeakVel R V VmaxIndices killIndices weirdSlopeyData
 
 %% calculate v_receding from earth
 

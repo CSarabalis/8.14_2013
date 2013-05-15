@@ -88,6 +88,8 @@ avgPeaks(killIndices) = [];
 weirdSlopeyData = [36:47];
 avgPeaks(weirdSlopeyData) = [];
 
+clear i
+
 %% auto-get peaks mang
 
 for i=1:max(size(avgPeaks))
@@ -106,6 +108,7 @@ end
 % end
 % end
 
+clear i
 
 
 %% plot glon vs peaks to see structure!
@@ -134,7 +137,7 @@ clear i j
 % woo!
 VmaxIndices = [];
 
-for i=26:28%1:max(size(avgPeaks))
+for i=1:max(size(avgPeaks))
 if avgPeaks{i}.glon < 95
 
 %plot
@@ -171,6 +174,8 @@ clear x y j i
 % end
 % end
 
+load('goodRotCurve.mat')
+
 vSun = 220; %km/sec
 rSun = 8.5; %kiloparsecs (kpc)
 R = [];
@@ -184,16 +189,22 @@ V=[V; v];
 end
 
 a = [67.76 50.06 -4.0448 0.0861];
-Tr = @(r) (a(1) + a(2)*r + a(3)*r.^2 + a(4)*r.^3)
+Tr = @(r) (a(1) + a(2)*r + a(3)*r.^2 + a(4)*r.^3);
+
+chi2 = sum((V-Tr(R)).^2./V);
+chi2nu = chi2/(max(size(V))-1);
 
 figure()
 errorbar(R,V,V*0+10,'.','MarkerSize',20)
-title('Rotation curve of the Milky Way','FontSize',20)
+title('Rotation curve of the Milky Way with cubic model','FontSize',20)
 xlabel('Radius from galactic center [kpc]','Interpreter','tex','FontSize',20)
 ylabel('Orbital velocity [km/sec]','Interpreter','tex','FontSize',20)
 hold all
 r = [0:0.01:9];
 plot(r,Tr(r),'r')
+text(2.4,110,{'$V = a_1 + a_2 R + a_3 R^2 + a_4 R^3$',...
+    ['$a_1 =$ ' num2str(a(1)) ', $a_2 =$ ' num2str(a(2)) ', $a_3 =$ ' num2str(a(3)) ', $a_4 =$ ' num2str(a(4))],...
+    ['$\chi^2_{\nu} =$ ' num2str(chi2nu)]},'FontSize',20)
 
 
 clear vSun rSun glonRad R V r v i
@@ -209,12 +220,15 @@ spirals = [];
 for i=1:max(size(avgPeaks))
 if avgPeaks{i}.glon > 95
 a = [67.76 50.06 -4.0448 0.0861]*0.868;
-glon = avgPeaks{i}.glon;
+glon = avgPeaks{i}.glon*2*pi/360;
 for j = size(avgPeaks{i}.P,1)
 Vp = avgPeaks{i}.P(j,2);
-Tr = @(r) (a(1) + a(2)*r + a(3)*r.^2 + a(4)*r.^3)*(rSun*glon*(2*pi/360))/(Vp+vSun*glon*(2*pi/360))-r;
+Tr = @(r) (a(1) + a(2)*r + a(3)*r.^2 + a(4)*r.^3)*(rSun*glon)/(Vp+vSun*glon)-r;
 R = fzero(Tr,9);
-spirals = [spirals; glon R];
+%phi = acos(rSun*sin(glon*(2*pi/360))/R);
+phim = acos(rSun/R*sin(glon)^2 - cos(glon)*sqrt(1-(rSun*sin(glon)/R)^2));
+phip = acos(rSun/R*sin(glon)^2 + cos(glon)*sqrt(1-(rSun*sin(glon)/R)^2));
+spirals = [spirals; glon*360/(2*pi) R phim phip];
 end
 end
 end
@@ -225,6 +239,12 @@ errorbar(spirals(:,1),spirals(:,2),spirals(:,2)*0+0.2,'.')
 title('Spiral arms of the Milky Way','FontSize',20)
 xlabel('Galactic longitude','Interpreter','tex','FontSize',20)
 ylabel('Radius from galactic center [kpc]','Interpreter','tex','FontSize',20)
+
+figure()
+polar(-1*spirals(:,3),spirals(:,2),'b.')
+hold all
+polar(-1*spirals(:,4),spirals(:,2),'r.')
+polar([0],[8.5],'MarkerSize',20)
 
 
 

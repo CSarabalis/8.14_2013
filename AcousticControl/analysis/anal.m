@@ -1,6 +1,7 @@
 %% import data
+setup
 
-%importData
+importData
 
 %% calculate psd's
 

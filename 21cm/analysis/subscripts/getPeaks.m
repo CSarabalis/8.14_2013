@@ -188,8 +188,11 @@ R=[R; r];
 V=[V; v];
 end
 
-a = [67.76 50.06 -4.0448 0.0861];
-Tr = @(r) (a(1) + a(2)*r + a(3)*r.^2 + a(4)*r.^3);
+a0 = [67.76 50.06 -4.0448 0.0861];
+Tr = @(r) (a0(1) + a0(2)*r + a0(3)*r.^2 + a0(4)*r.^3);
+TrLM = @(r,a) a(1) + a(2)*r + a(3)*r.^2 + a(4)*r.^3;
+err = V*0+5;
+[a,aerr,chisq,yfit,corr] = levmar(R,V,err,TrLM,a0,0,0)
 
 chi2 = sum((V-Tr(R)).^2./V);
 chi2nu = chi2/(max(size(V))-1);
@@ -203,8 +206,20 @@ hold all
 r = [0:0.01:9];
 plot(r,Tr(r),'r')
 text(2.4,110,{'$V = a_1 + a_2 R + a_3 R^2 + a_4 R^3$',...
-    ['$a_1 =$ ' num2str(a(1)) ', $a_2 =$ ' num2str(a(2)) ', $a_3 =$ ' num2str(a(3)) ', $a_4 =$ ' num2str(a(4))],...
+    ['$a_1 =$ ' num2str(a0(1)) ', $a_2 =$ ' num2str(a0(2)) ', $a_3 =$ ' num2str(a0(3)) ', $a_4 =$ ' num2str(a0(4))],...
     ['$\chi^2_{\nu} =$ ' num2str(chi2nu)]},'FontSize',20)
+
+figure()
+errorbar(R,V,err,'.','MarkerSize',20)
+title('Rotation curve of the Milky Way with cubic model Lev-Mar','FontSize',20)
+xlabel('Radius from galactic center [kpc]','Interpreter','tex','FontSize',20)
+ylabel('Orbital velocity [km/sec]','Interpreter','tex','FontSize',20)
+hold all
+r = [0:0.01:9];
+plot(r,TrLM(r,a),'r')
+text(2.4,110,{'$V = a_1 + a_2 R + a_3 R^2 + a_4 R^3$',...
+    ['$a_1 =$ ' num2str(a(1)) ', $a_2 =$ ' num2str(a(2)) ', $a_3 =$ ' num2str(a(3)) ', $a_4 =$ ' num2str(a(4))],...
+    ['$\chi^2_{\nu} =$ ' num2str(chisq/max(size(V)))]},'FontSize',20)
 
 
 clear vSun rSun glonRad R V r v i
@@ -219,7 +234,7 @@ spirals = [];
 
 for i=1:max(size(avgPeaks))
 if avgPeaks{i}.glon > 95
-a = [67.76 50.06 -4.0448 0.0861]*0.868;
+%a = [67.76 50.06 -4.0448 0.0861]*0.868;
 glon = avgPeaks{i}.glon*2*pi/360;
 for j = size(avgPeaks{i}.P,1)
 Vp = avgPeaks{i}.P(j,2);
@@ -228,11 +243,21 @@ R = fzero(Tr,9);
 %phi = acos(rSun*sin(glon*(2*pi/360))/R);
 phim = acos(rSun/R*sin(glon)^2 - cos(glon)*sqrt(1-(rSun*sin(glon)/R)^2));
 phip = acos(rSun/R*sin(glon)^2 + cos(glon)*sqrt(1-(rSun*sin(glon)/R)^2));
-spirals = [spirals; glon*360/(2*pi) R phim phip];
+X = rSun/R;
+if 0<glon && glon<3.14
+    phim1 = asin(X*sin(glon))-glon;
+end
+if 3.14<glon && glon<6.29
+    glonQ = 2*pi - glon;
+    phim1 = -1*(asin(X*sin(glon))-glon);
+end
+%phip1 = abs(asec((X.*tan(glon)+sec(glon).*(X+1).^-0.5)./(X-1)));
+spirals = [spirals; glon*360/(2*pi) R phim1 phip];
 end
 end
 end
 %C = @(Vp, glon) (Vp+vSun*glon*(2*pi/360))/(rSun*glon*(2*pi/360));
+spirals(:,[1,3])
 
 figure()
 errorbar(spirals(:,1),spirals(:,2),spirals(:,2)*0+0.2,'.')
@@ -245,7 +270,8 @@ polar(-1*spirals(:,3),spirals(:,2),'b.')
 hold all
 polar(-1*spirals(:,4),spirals(:,2),'r.')
 polar([0],[8.5],'MarkerSize',20)
-
+figure()
+polar(spirals(:,1)*2*pi/360,spirals(:,2),'.')
 
 
 

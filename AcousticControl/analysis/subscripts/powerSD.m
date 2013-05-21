@@ -26,7 +26,8 @@ end
 
 
 %% may 16
-for i=1:2
+%for i=1:2
+i=1;
 data = may16{i};
 x = data.qpdX;
 y = data.qpdY;
@@ -48,4 +49,4 @@ Pxx = abs(fft(y,nfft)).^2/length(y)/Fs;
 Ypsd = dspdata.psd(Pxx(1:length(Pxx)/2),'Fs',Fs); 
 figure
 plot(Ypsd);
-end
+%end

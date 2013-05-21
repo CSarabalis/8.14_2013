@@ -96,38 +96,32 @@ clear importedData i
 
 %% May 16
 
-may16 = cell(2,1);
+files = dir('../data/May 16');
+files = files(3:end);
 
+may16 = cell(size(files));
 
-i=1;
-importedData = importdata('../data/May 16/46.txt','\t',0);
-may16{i}=struct;
+Vpp = [0 3 2 1 0.5 0.25 0.125 0.62 0.3 0 3];
+freq = [0 500 500 500 500 500 500 500 500 0 500];
+waveForm = {'none' 'square' 'square' 'square' 'square' 'square' 'square' 'square' 'square' 'none' 'square'};
+bead = {'y' 'y' 'y' 'y' 'y' 'y' 'y' 'y' 'y' 'n' 'n'};
+
+for i=1:max(size(files))
+name = ['../data/May 16/' files(i).name];
+importedData = importdata(name,'\t',0);
 may16{i}.qpdX = importedData(:,1); % QPD output voltages
 may16{i}.qpdY = importedData(:,2);
 may16{i}.sgX = importedData(:,3); % strain gauge output voltages
 may16{i}.sgY = importedData(:,4);
-may16{i}.freq = 0; % frequency of driving in Hz
-may16{i}.Vpp = 0; % volts peak-to-peak of signal in V
+may16{i}.freq = freq(i); % frequency of driving in Hz
+may16{i}.Vpp = Vpp(i); % volts peak-to-peak of signal in V
 may16{i}.sampleRate = 100000; % sample rate of data in Hz
 may16{i}.intTime = 3; % timespan of data (integration time) in secs
-may16{i}.fileName = '46.txt';
-may16{i}.waveForm = 'none';
-may16{i}.laserCurrent = 147.2; % laser current in mA
-may16{i}.bead = 'y'; % y if bead present, n if no bead present
+may16{i}.fileName = files(i).name;
+may16{i}.waveForm = waveForm{i};
+may16{i}.laserCurrent = 147.1; % laser current in mA
+may16{i}.bead = bead{i}; % y if bead present, n if no bead present
+end
 
 
-i=2;
-importedData = importdata('../data/May 16/47.txt','\t',0);
-may16{i}=struct;
-may16{i}.qpdX = importedData(:,1); % QPD output voltages
-may16{i}.qpdY = importedData(:,2);
-may16{i}.sgX = importedData(:,3); % strain gauge output voltages
-may16{i}.sgY = importedData(:,4);
-may16{i}.freq = 500; % frequency of driving in Hz
-may16{i}.Vpp = 3; % volts peak-to-peak of signal in V
-may16{i}.sampleRate = 100000; % sample rate of data in Hz
-may16{i}.intTime = 3; % timespan of data (integration time) in secs
-may16{i}.fileName = '47.txt';
-may16{i}.waveForm = 'square';
-may16{i}.laserCurrent = 147.2; % laser current in mA
-may16{i}.bead = 'y'; % y if bead present, n if no bead present
+clear Vpp freq waveForm bead files i importedData name
